@@ -1,0 +1,17 @@
+Flask
+SQLAlchemy
+Flask-SQLAlchemy
+PyMySQL
+Flask-Bcrypt
+Flask-Login
+Flask-Mail
+Flask-WTF
+itsdangerous
+Jinja2
+Werkzeug
+WTForms
+email-validator
+gunicorn
+reportlab
+twilio
+Flask-SocketIO
