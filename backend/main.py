@@ -1,6 +1,5 @@
 """ This is my flask app entry file """
 
-
 from flask import render_template, flash
 from flask_login import current_user
 from app import create_app
