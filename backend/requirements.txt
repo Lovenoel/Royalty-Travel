@@ -12,6 +12,6 @@ Werkzeug
 WTForms
 email-validator
 gunicorn
-reportlab
+#reportlab
 twilio
 Flask-SocketIO
