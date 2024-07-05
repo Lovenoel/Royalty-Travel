@@ -1,26 +1,79 @@
-from flask import render_template
+from flask import render_template, flash
 from flask_login import current_user
 from app import create_app
+from app.forms.forms import RegistrationForm, LoginForm
+from app.utils.notifications import check_and_send_notifications
+from flask_apscheduler import APScheduler
+from app.forms.bookingForm import BookingForm
+
 
 app = create_app()
 
+posts = [
+    {
+        "name": "John Peter",
+        "email": "peterjohn12@gmail.com",
+        "phone": "0787625864",
+    },
+
+    {
+        "name": "Mary Jane",
+        "email": "janeMary@gmail.com",
+        "phone": "0707836901"
+    }
+]
+
+promotions = [
+        {
+            'title': 'Special Discount!',
+            'description': 'Get 20% off on all bookings this month.'
+        },
+        {
+            'title': 'Summer Sale!',
+            'description': 'Book now and enjoy discounted rates on selected routes.'
+        }
+    ]
+
+scheduler = APScheduler()
+scheduler.init_app(app)
+
+@scheduler.task('interval', id='check_notifications', seconds=60)
+def scheduled_task():
+    with app.app_context():
+        check_and_send_notifications()
+
+scheduler.start()
+
 # The index or home route of the app
 @app.route('/')
+@app.route('/home', methods=['GET'])
 def index():
-    return render_template('index.html')
+    return render_template('index.html', posts=posts)
 
 # The routes indexing booking
-@app.route('/booking')
+@app.route('/booking', methods=['GET', 'POST'])
 def booking():
-    return render_template('booking.html')
+    form = BookingForm()
+    return render_template('book.html', form=form)
+
+@app.route('/booking/<int:booking_id>')
+def booking_detail(booking_id):
+    # Here you would fetch the booking details from the database
+    # For simplicity, let's just pass the booking_id to the template
+    return render_template('booking_detail.html', booking_id=booking_id)
+
+@app.route('/promotions')
+def promotions():
+    return render_template('promotions.html', promotions=promotions)
+
 
 # the route that calls bus_status
-@app.route('/bus_status')
+@app.route('/bus_status', methods=['GET', 'POST'])
 def bus_status():
     return render_template('bus_status.html')
 
 # the route that calls the notification
-@app.route('/notification')
+@app.route('/notification', methods=['GET', 'POST'])
 def notification():
     return render_template('notification.html')
 
@@ -29,17 +82,20 @@ def notification():
 def receipt():
     return render_template('receipt.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    return render_template('profile.html', user=current_user)
+    form = RegistrationForm()
+    return render_template('profile.html', user=current_user, form=form)
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = RegistrationForm()
+    return render_template('register.html', user=current_user, form=form)
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', User=current_user, form=form)
 
 @app.route('/logout')
 def logout():
