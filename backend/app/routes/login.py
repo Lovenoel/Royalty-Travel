@@ -15,7 +15,7 @@ def register():
         return redirect(url_for('profile.profile'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(name=form.username.data, email=form.email.data, phone=form.phone.data)
+        user = User(username=form.username.data, email=form.email.data, phone=form.phone.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -33,7 +33,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('profile.profile'))
+            return redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)

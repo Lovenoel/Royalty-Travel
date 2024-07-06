@@ -11,7 +11,7 @@ class Booking(db.Model):
     destination = db.Column(db.String(100), nullable=False)
     date_time = db.Column(db.DateTime, default=func.now()) # 
 
-    fare = db.Column(db.Numeric(10, 2), nullable=False)
+    fare = db.Column(db.String(10, 2), nullable=False)
 
     # Relationship with Passenger
     passenger = db.relationship('Passenger', back_populates='bookings')
@@ -24,7 +24,7 @@ class Booking(db.Model):
             'departure_place': self.departure_place,
             'destination': self.destination,
             'date_time': self.date_time.isoformat(),
-            'fare': str(self.fare)
+            'fare': self.fare
         }
 
     __table_args__ = {'extend_existing': True}

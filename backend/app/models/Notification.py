@@ -38,6 +38,15 @@ class Notification(db.Model):
     timestamp = db.Column(db.DateTime, default=func.now())
     read = db.Column(db.Boolean, default=False)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'message': self.message,
+            'timestamp': self.timestamp,
+            'read': self.read
+        }
+
 
     __table_args__ = {'extend_existing': True}
 
