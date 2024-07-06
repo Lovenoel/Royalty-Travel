@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="POST" action="{{ url_for('authorize.register') }}">
+            {{ form.hidden_tag() }}
+            <label for="username">Username:</label>
+            {{ form.username(size=32) }}
+            <label for="email">Email:</label>
+            {{ form.email(size=32) }}
+            <label for="phone">Phone:</label>
+            {{ form.phone(size=32)}}
+            <label for="password">Password:</label>
+            {{ form.password(size=32) }}
+            <label for="confirm_password">Confirm Password:</label>
+            {{ form.confirm_password(size=32) }}
+            {{ form.submit() }}
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small>
+            Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+        </small>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form methods="POST" action="{{ url_for('login') }}">
+            {{ form.hidden_tag() }}
+            <label for="email">Email:</label>
+            {{ form.email(size=32) }}
+            <label for="password">Password:</label>
+            {{ form.password(size=32) }}
+            <label>
+                {{ form.remember() }} Remember Me
+            </label>
+            {{ form.submit() }}
+        </form>
+    </div>
+</body>
+</html>

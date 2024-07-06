@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royalty Travel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css')}}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Royalty Travel</div>
+        <nav>
+            <a href="{{ url_for('index')}}">Home</a>
+            <a href="{{ url_for('booking')}}">Bookings</a>
+            <a href="{{ url_for('profile')}}">Profile</a>
+            <a href="{{ url_for('booking.promotions')}}">Promotions</a>
+        </nav>
+    </div>
+    <div class="container">
+        <h1>Book a Bus</h1>
+        <form method="POST" action="{{ url_for('booking.book') }}">
+            {{ form.hidden_tag() }}
+            <div class="input-group">
+                {{ form.name.label }} {{ form.name(class="form-control") }}
+            </div>
+            <div class="input-group">
+                {{ form.departure_place.label }} {{ form.departure_place(class="form-control") }}
+            </div>
+            <div class="input-group">
+                {{ form.destination.label }} {{ form.destination(class="form-control") }}
+            </div>
+            <div class="input-group">
+                {{ form.date_time.label }} {{ form.date_time(class="form-control", type="datetime-local") }}
+            </div>
+            <button class="book-now-btn" type="submit">{{ form.submit() }}</button>
+        </form>
+        
+        <div class="recent-bookings">
+            <h2>Recent Bookings:</h2>
+            <ul>
+                <a href="{{ url_for('booking_detail', booking_id=1) }}"><li>Booking 1 Details</li></a>
+                <a href="{{ url_for('booking_detail', booking_id=2) }}"><li>Booking 2 Details</li></a>
+            </ul>
+        </div>
+        <div class="promotional-banner">
+            <h2>Special Offers:</h2>
+            <a href="{{ url_for('booking.promotions') }}">
+                <img src="{{ url_for('static', filename='images/promo_banner.png') }}" alt="Special Offer">
+            </a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/booking.js') }}"></script>
+</body>
+</html>

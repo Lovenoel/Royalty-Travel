@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Royalty Travel</div>
+        <nav class="nav-container">
+            <a href="{{ url_for('index')}}">Home</a>
+            <a href="{{ url_for('booking')}}">Bookings</a>
+            <a href="{{url_for('receipt')}}">Receipts</a>
+            <div class="profile-photo">
+                <h5>Profile Photo</h5>
+                <label for="profile-pictuer-input">
+                    <img src="{{ url_for('static', filename='images/kln.png') }}" alt="Profile Picture">
+                </label>
+                <input type="file" id="profile-picture-input" accept="image/*" style="display: none;">
+            </div>
+        </nav>
+    </div>
+    <h2>Profile</h2>
+    <form method="POST" action="{{ url_for('profile') }}">
+        {{ form.hidden_tag() }}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ user.name }}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" name="phone" value="{{ user.phone }}" required>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <h2>Change Password</h2>
+    <form method="POST" action="{{ url_for('profile.change_password') }}">
+        {{ form.hidden_tag() }}
+        <label for="current_password">Current Password:</label>
+        <input type="password" id="current_password" name="current_password" required>
+
+        <label for="new_password">New Password:</label>
+        <input type="password" id="new_password" name="new_password" required>
+
+        <label for="confirm_password">Confirm New Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+
+        <button type="submit">Change Password</button>
+    </form>
+    <script src="{{ url_for('static', filename='js/profile.js')}}"></script>
+</body>
+</html>

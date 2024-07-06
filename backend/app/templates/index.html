@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royalty Travel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css')}}">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Royalty Travel
+            <div class="profile-photo">
+                <h5>Profile Photo</h5>
+                <label for="profile-pictuer-input">
+                    <img src="{{ url_for('static', filename='images/kln.png') }}" alt="Profile Picture">
+                </label>
+                <input type="file" id="profile-picture-input" accept="image/*" style="display: none;">
+            </div>   
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('booking') }}">Bookings</a></li>
+                <li><a href="{{ url_for('bus_status') }}">Bus Status</a></li>
+                <li><a href="{{ url_for('notification') }}">Notifications</a></li>
+                <li><a href="{{ url_for('receipt') }}">Receipts</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% for post in posts %}
+        <h1>{{ post.name }}</h1>
+        <p>This Mr.{{ post.name }} and his email is {{ post.email }}</p>
+    {% endfor %}
+    <footer>
+        <p>&copy; 2024 Royalty Travel</p>
+    </footer>
+</body>
+</html>

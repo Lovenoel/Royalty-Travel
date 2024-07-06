@@ -1,0 +1,52 @@
+/* static/css/styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.list-group-item h5 {
+    font-size: 1.25em;
+}
+
+.list-group-item p {
+    margin-bottom: 0;
+}
+/* static/css/styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.list-group-item h5 {
+    font-size: 1.25em;
+}
+
+.list-group-item p {
+    margin-bottom: 0;
+}

@@ -1,0 +1,44 @@
+/* bus_status.css */
+
+h2 {
+    color: #2a9d8f;
+}
+
+form {
+    margin-bottom: 20px;
+    background-color: #f1faee;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+form input {
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #2a9d8f;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #21867a;
+}
+
+h3 {
+    color: #1d3557;
+}
