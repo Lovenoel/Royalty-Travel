@@ -16,15 +16,15 @@ def register():
         return redirect(url_for('profile.profile'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, phone=form.phone.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        try:
+        existing_user = User.query.filter_by(email=form.email.data).first()
+        if existing_user is None:
+            user = User(username=form.username.data, email=form.email.data, phone=form.phone.data)
+            user.set_password(form.password.data)
+            db.session.add(user)
             db.session.commit()
             flash('Your account has been created!', 'success')
             return redirect(url_for('authorize.login'))
-        except IntegrityError:
-            db.session.rollback()
+        else:
             flash('Email already exists. Please use a different email.', 'danger')
     return render_template('register.html', title='Register', form=form)
 
