@@ -16,7 +16,8 @@ migrate = Migrate()
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 
-def create_app(config_name='development'):
+
+def create_app():
     # Create a Flask instance
     app = Flask(__name__, static_folder='static')
     csrf = CSRFProtect(app)
@@ -25,17 +26,19 @@ def create_app(config_name='development'):
     basedir = os.path.abspath(os.path.dirname(__file__))
     load_dotenv(os.path.join(basedir, '..', '.env'))
 
+    # Set configuration from environment variables
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    
     # Load configuration
-    if config_name == 'development':
-        app.config.from_object('config.DevelopmentConfig')
-    elif config_name == 'testing':
-        app.config.from_object('config.TestingConfig')
-    else:
-        raise ValueError("Invalid config name")
-
+    from config import Config
+    app.config.from_object(Config)
+    
     # Initialize extensions
     db.init_app(app)
-    migrate.init_app(app, db)
+
+
     login_manager.init_app(app)
 
     from app.models import User
@@ -44,6 +47,7 @@ def create_app(config_name='development'):
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    
     # Register blueprints
     from app.routes.Booking import bp as booking_bp
     from app.routes.Bus_status import bp as bus_status_bp
