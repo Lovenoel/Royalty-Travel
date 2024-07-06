@@ -4,6 +4,7 @@ from werkzeug.utils import secure_filename
 from app import db
 from app.forms.forms import RegistrationForm, LoginForm  # Import your forms
 from app.models import User
+from sqlalchemy.exc import IntegrityError
 
 profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
 authorize_bp = Blueprint('authorize', __name__, url_prefix='/authorize')
@@ -18,9 +19,13 @@ def register():
         user = User(username=form.username.data, email=form.email.data, phone=form.phone.data)
         user.set_password(form.password.data)
         db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created!', 'success')
-        return redirect(url_for('authorize.login'))
+        try:
+            db.session.commit()
+            flash('Your account has been created!', 'success')
+            return redirect(url_for('authorize.login'))
+        except IntegrityError:
+            db.session.rollback()
+            flash('Email already exists. Please use a different email.', 'danger')
     return render_template('register.html', title='Register', form=form)
 
 # Login route
