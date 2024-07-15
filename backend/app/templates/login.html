@@ -5,21 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
 </head>
 <body>
     <div class="container">
         <h2>Login</h2>
-        <form methods="POST" action="{{ url_for('login') }}">
+        <form  action="{{ url_for('authorize.login') }}" autocomplete="off" method="POST">
             {{ form.hidden_tag() }}
+            <!--  -->
             <label for="email">Email:</label>
-            {{ form.email(size=32) }}
+            {{ form.email(size=32, autocomplete="off") }}
             <label for="password">Password:</label>
-            {{ form.password(size=32) }}
+            {{ form.password(size=32, autocomplete="off") }}
             <label>
                 {{ form.remember() }} Remember Me
             </label>
             {{ form.submit() }}
         </form>
+        <small class="text-muted ml-2">
+            <a href="#">Forgot password</a>
+        </small>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need an account? <a class="ml-2" href="{{ url_for('authorize.register') }}">Sign Up Now</a>
+        </small>
     </div>
 </body>
 </html>

@@ -43,7 +43,8 @@ def buses_in_area():
     buses = Bus.query.filter_by(location=area).all()  # Query buses in the specified area
     return jsonify({
         "number_of_buses": len(buses),  # Number of buses found in the area
-        "buses": [{"id": bus.id, "number_plate": bus.number_plate} for bus in buses]
+        "buses": [{"id": bus.id,
+                   "number_plate": bus.number_plate} for bus in buses]
         # List of buses in the area with their IDs and number plates
     }), 200
 
@@ -55,6 +56,8 @@ def get_bus_status():
     Returns:
     - JSON response with status details of all buses.
     """
-    buses = BusStatus.query.all()  # Retrieve all bus statuses from the database
-    return jsonify([bus.to_dict() for bus in buses])  # Convert bus status objects to dictionaries and return as JSON
+    # Retrieve all bus statuses from the database
+    buses = BusStatus.query.all()
 
+    # Convert bus status objects to dictionaries and return as JSON
+    return jsonify([bus.to_dict() for bus in buses])

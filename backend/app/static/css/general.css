@@ -10,24 +10,29 @@ body {
 header {
     background-color: #00ff62;
     color: #fff;
-    /*padding: 5px;*/
     text-align: center;
     display: flex;
     padding: 10px 0;
     position: fixed;
     top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure header stays on top */
 }
 
 .logo {
     background-color: #007bff;
     font-size: 30px;
-    display:flex;
-    align-items:center;
-    /*margin: 0 10px;*/
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
 }
 
 header h1 {
     margin: 0;
+}
+
+#profile-picture-input {
+    display: none;
 }
 
 .profile-photo {
@@ -38,21 +43,15 @@ header h1 {
 
 .profile-photo img {
     width: 30px;
-    height: 30px;           
+    height: 30px;
     border-radius: 50%;
     margin-right: 10px;
-}
-
-.profile-photo h6 {
-    margin: 0;
-    font-size: 12px;
-    text-align: center;
-    color: white;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 nav ul li {
@@ -67,6 +66,7 @@ nav ul li a {
 
 main {
     padding: 20px;
+    margin-top: 70px; /* Ensure content below fixed header */
 }
 
 footer {
@@ -81,14 +81,17 @@ footer {
 
 /* Form styles */
 form {
-    background-color: #1a0404;
+    background-color: #160000;
+    color: #f4f4f4;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);}
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
 form label {
     display: block;
     margin: 10px 0 5px;
+    color: #fff;
 }
 
 form input[type="text"],
@@ -99,12 +102,15 @@ form input[type="number"] {
     padding: 8px;
     box-sizing: border-box;
     margin-bottom: 10px;
-    color:#031403;
+    color: #031403;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 form button {
     background-color: #007bff;
-    color: #9b1d1d;
+    color: #fff;
     border: none;
     padding: 10px 20px;
     cursor: pointer;

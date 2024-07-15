@@ -1,12 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
 from flask_login import current_user, login_user, logout_user, login_required
-from werkzeug.utils import secure_filename
-from app import db
+from app import db, bcrypt
 from app.forms.forms import RegistrationForm, LoginForm  # Import your forms
 from app.models import User
-from sqlalchemy.exc import IntegrityError
 
-profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
 authorize_bp = Blueprint('authorize', __name__, url_prefix='/authorize')
 
 # Registration route
@@ -18,8 +15,11 @@ def register():
     if form.validate_on_submit():
         existing_user = User.query.filter_by(email=form.email.data).first()
         if existing_user is None:
-            user = User(username=form.username.data, email=form.email.data, phone=form.phone.data)
-            user.set_password(form.password.data)
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            user = User(username=form.username.data,
+                        password=hashed_password,
+                        email=form.email.data,
+                        phone=form.phone.data)
             db.session.add(user)
             db.session.commit()
             flash('Your account has been created!', 'success')
@@ -31,22 +31,44 @@ def register():
 # Login route
 @authorize_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    print("----------login hit--------")
     if current_user.is_authenticated:
-        return redirect(url_for('profile.profile'))
+        print("User is already authenticated.")
+        return redirect(url_for('main.home'))
     form = LoginForm()
+    print(f"{form.email.data} ------->form data")
+            
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_password(form.password.data):
+        if user:
+            print(f"User found: {user}")  # Debug statement
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            print("Password check passed")  # Debug statement
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('home'))
+            next_page = request.args.get('next')
+            print(f"Next page: {next_page}")  # Debug statement
+            return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
+            print("Login unsuccessful. Invalid email or password.")  # Debug statement
             flash('Login Unsuccessful. Please check email and password', 'danger')
+    else:
+        print("Form validation failed.")  # Debug statement
+            
     return render_template('login.html', title='Login', form=form)
 
-# Logout route
 @authorize_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('authorize.login'))
+    return render_template('authorize.login')
 
+            
+
+
+
+
+
+
+
+
+        

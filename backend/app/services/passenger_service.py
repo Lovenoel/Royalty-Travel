@@ -14,10 +14,10 @@ class PassengerService:
         """
         self.db = db
 
-    def create_passenger(self, name, email, phoneNumber, contact_info):
+    def create_passenger(self, username, email, phoneNumber, contact_info):
         """ Creates a new passenger
         Args:
-            name: name of the passenger
+            username: name of the passenger
             email: email of the passenger
             phoneNumber: passenger's phone number
             contact_info: passenger's contact inform
@@ -25,7 +25,7 @@ class PassengerService:
             a new passenger and details
         """
         new_passenger = {
-            "name": name,
+            "username": username,
             "email": email,
             "phoneNumber": phoneNumber,
             "contact_info": contact_info

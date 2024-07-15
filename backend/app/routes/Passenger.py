@@ -1,6 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from app.models import Passenger
 from app import db
+from sqlalchemy.exc import IntegrityError
 
 # Create a Blueprint for passenger-related routes under '/passenger'
 bp = Blueprint('passengers', __name__, url_prefix='/passenger')
@@ -29,12 +30,35 @@ def handle_passengers():
     
     elif request.method == 'POST':
         # Handle POST request to create a new passenger
-        data = request.get_json()
-        new_passenger = Passenger(name=data['name'])  # Create a new Passenger object
-        db.session.add(new_passenger)  # Add new passenger to the session
-        db.session.commit()  # Commit changes to the database
-        return jsonify(new_passenger.to_dict()), 201  # Return newly created passenger details with status code 201
-
+        if request.is_json:
+            data = request.get_json()
+        else:
+            data = request.form
+        print('Received data:', data)
+        try:
+            if not data or 'username' not in data or 'email' not in data or 'phone' not in data:
+                return jsonify({'error': 'Invalid data'}), 400
+            new_passenger = Passenger(
+                username=data['username'],
+                email=data['email'],
+                phone=data['phone'])  # Create a new Passenger object
+            db.session.add(new_passenger)  # Add new passenger to the session
+            db.session.commit()  # Commit changes to the database
+            # Return newly created passenger details with status code 201
+            return jsonify(new_passenger.to_dict()), 201
+        except IntegrityError as e:
+            db.session.rollback()  # Rollback the session in case of an error
+            error_message = str(e.orig)  # Get the original error message from SQLAlchemy
+            if 'UNIQUE constraint failed: passenger.username' in error_message:
+                return jsonify({'error': 'Username already exists. Please choose a different username.'}), 400
+            elif 'UNIQUE constraint failed: passenger.phone' in error_message:
+                return jsonify({'error': 'Phone number already exists. Please use a different phone number.'}), 400
+            elif 'UNIQUE constraint failed: passenger.email' in error_message:
+                return jsonify({'error': 'Email already exists. Please use a different email.'}), 400
+            else:
+                return jsonify({'error': 'Database integrity error.'}), 400
+        except KeyError as e:
+            return jsonify({'error': f'Missing required field: {str(e)}'}), 400
 @bp.route('/passenger/<int:id>', methods=['GET'])
 def get_passenger(id):
     """
@@ -49,7 +73,27 @@ def get_passenger(id):
     passenger = Passenger.query.get_or_404(id)  # Retrieve passenger by ID or return 404 if not found
     return jsonify({
         'id': passenger.id,
-        'name': passenger.name,
-        'email': passenger.email,  # Assuming email and phone are attributes of Passenger model
+        'username': passenger.username,
+        'email': passenger.email,
         'phone': passenger.phone
     })
+
+@bp.route('/passenger/<int:id>/details', methods=['GET'])
+def show_passenger_details(id):
+    """
+    Endpoint for rendering the passenger details HTML template.
+
+    Args:
+    - id (int): ID of the passenger to retrieve and display details for.
+
+    Returns:
+    - Rendered HTML template 'passenger.html' with details of the specified passenger.
+    """
+    passenger = Passenger.query.get_or_404(id)  # Retrieve passenger by ID or return 404 if not found
+    return render_template('passenger.html', passenger=passenger)
+
+
+@bp.route('/add', methods=['GET'])
+def add_passenger_page():
+    """Endpoint for adding a passenger"""
+    return render_template('add_passenger.html')

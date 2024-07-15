@@ -27,15 +27,15 @@ class Passenger(db.Model):
     - Each record in this table represents a passenger with a unique name, email, and phone number.
     """
 
-    __tablename__ = 'Passenger'
+    __tablename__ = 'passenger'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    phone = db.Column(db.String(15), nullable=False)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    phone = db.Column(db.String(15), unique=True, nullable=False)
 
     # Relationship with Booking
-    bookings = db.relationship('Booking', back_populates='passenger', lazy=True)
+    bookings = db.relationship('PassengerBooking', back_populates='passenger', lazy=True)
 
     __table_args__ = {'extend_existing': True}
 
@@ -48,7 +48,7 @@ class Passenger(db.Model):
         """
         return {
             'id': self.id,
-            'name': self.username,
+            'username': self.username,
             'email': self.email,
             'phone': self.phone
         }

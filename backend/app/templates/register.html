@@ -8,19 +8,19 @@
 </head>
 <body>
     <div class="container">
-        <h2>Register</h2>
-        <form method="POST" action="{{ url_for('authorize.register') }}">
+        <h2>Join Today</h2>
+        <form method="POST" action="{{ url_for('authorize.register') }}" autocomplete="off">
             {{ form.hidden_tag() }}
             <label for="username">Username:</label>
-            {{ form.username(size=32) }}
+            {{ form.username(size=32, autocomplete="off") }}
             <label for="email">Email:</label>
-            {{ form.email(size=32) }}
+            {{ form.email(size=32, autocomplete="off") }}
             <label for="phone">Phone:</label>
-            {{ form.phone(size=32)}}
+            {{ form.phone(size=32, autocomplete="off") }}
             <label for="password">Password:</label>
-            {{ form.password(size=32) }}
+            {{ form.password(size=32, autocomplete="off") }}
             <label for="confirm_password">Confirm Password:</label>
-            {{ form.confirm_password(size=32) }}
+            {{ form.confirm_password(size=32, autocomplete="off") }}
             {{ form.submit() }}
         </form>
     </div>

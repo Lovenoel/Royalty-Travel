@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 import os
-from app import db
+from app import db, bcrypt
+from app.forms.forms import RegistrationForm
 
 profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
 
@@ -10,6 +11,8 @@ profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
 @profile_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    # Updates the current_user details
+    form = RegistrationForm()
     if request.method == 'POST':
         current_user.name = request.form.get('name')
         current_user.email = request.form.get('email')
@@ -17,17 +20,19 @@ def profile():
         db.session.commit()
         flash('Your profile has been updated!', 'success')
         return redirect(url_for('profile.profile'))
-    return render_template('profile.html', user=current_user)
+    return render_template('profile.html', user=current_user, form=form)
 
 # Change password route
 @profile_bp.route('/change_password', methods=['GET','POST'])
 @login_required
 def change_password():
+    # Changes the password of the user
     current_password = request.form.get('current_password')
     new_password = request.form.get('new_password')
     confirm_password = request.form.get('confirm_password')
 
-    if not current_user.check_password(current_password):
+    # Compares the hashed password and the user input
+    if not current_user and bcrypt.check_password(current_password):
         flash('Current password is incorrect', 'danger')
         return redirect(url_for('profile.profile'))
 
@@ -38,7 +43,7 @@ def change_password():
     current_user.set_password(new_password)
     db.session.commit()
     flash('Your password has been updated!', 'success')
-    return redirect(url_for('profile.profile'))
+    return redirect(url_for('authorize.login'))
 
 # Route to handle profile picture upload
 @profile_bp.route('/upload_picture', methods=['POST'])

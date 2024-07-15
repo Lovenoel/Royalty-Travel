@@ -1,6 +1,7 @@
-from app import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from app import db, bcrypt
+from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
+
 
 class User(UserMixin, db.Model):
     """
@@ -14,7 +15,7 @@ class User(UserMixin, db.Model):
     - phone: Phone number of the user.
 
     Table Name:
-    - __tablename__: Specifies the database table name for this model ('User').
+    - __tablename__: Specifies the database table name for this model ('user').
 
     Usage:
     - This model facilitates storage and retrieval of user details within a database.
@@ -27,12 +28,15 @@ class User(UserMixin, db.Model):
     - Adjust `username`, `email`, `password`, and `phone` attributes as per specific application requirements.
     """
 
-    __tablename__ = 'User'
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150))
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
     phone = db.Column(db.String(15))
+
+    # Relationship with Booking
+    bookings =db.relationship('UserBooking', back_populates='user', lazy=True)
 
     def __repr__(self):
         """
@@ -62,4 +66,4 @@ class User(UserMixin, db.Model):
         Returns:
         - bool: True if the password matches, False otherwise.
         """
-        return check_password_hash(self.password, password)
+        return bcrypt.check_password_hash(self.password, password)

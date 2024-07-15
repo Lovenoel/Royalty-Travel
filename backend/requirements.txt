@@ -18,3 +18,4 @@ Flask-SocketIO
 Flask-APScheduler
 flask-migrate
 flask_testing
+flask-cors

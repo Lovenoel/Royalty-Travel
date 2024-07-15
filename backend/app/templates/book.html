@@ -18,19 +18,25 @@
     </div>
     <div class="container">
         <h1>Book a Bus</h1>
-        <form method="POST" action="{{ url_for('booking.book') }}">
+        <form method="POST" action="{{ url_for('booking.book') }}" autocomplete="off">
             {{ form.hidden_tag() }}
+            {% if not current_user.is_authenticated %}
+                <div class="input-group">
+                    {{ form.passenger_name.label }} {{ form.passenger_name(class="form-control", autocomplete="off") }}
+                </div>
+            {% else %}
+                <div>
+                    {{ form.username.label }} {{ form.username(class="form-control", autocomplete="off") }}
+                </div>
+            {% endif %}
             <div class="input-group">
-                {{ form.name.label }} {{ form.name(class="form-control") }}
+                {{ form.departure_place.label }} {{ form.departure_place(class="form-control", autocomplete="off") }}
             </div>
             <div class="input-group">
-                {{ form.departure_place.label }} {{ form.departure_place(class="form-control") }}
+                {{ form.destination.label }} {{ form.destination(class="form-control", autocomplete="off") }}
             </div>
             <div class="input-group">
-                {{ form.destination.label }} {{ form.destination(class="form-control") }}
-            </div>
-            <div class="input-group">
-                {{ form.date_time.label }} {{ form.date_time(class="form-control", type="datetime-local") }}
+                {{ form.date_time.label }} {{ form.date_time(class="form-control", type="datetime-local", autocomplete="off") }}
             </div>
             <button class="book-now-btn" type="submit">{{ form.submit() }}</button>
         </form>
@@ -38,8 +44,8 @@
         <div class="recent-bookings">
             <h2>Recent Bookings:</h2>
             <ul>
-                <a href="{{ url_for('booking_detail', booking_id=1) }}"><li>Booking 1 Details</li></a>
-                <a href="{{ url_for('booking_detail', booking_id=2) }}"><li>Booking 2 Details</li></a>
+                <a href="{{ url_for('user_booking_details', booking_id=1) }}"><li>Booking 1 Details</li></a>
+                <a href="{{ url_for('passenger_booking_details', booking_id=1) }}"><li>Booking 2 Details</li></a>
             </ul>
         </div>
         <div class="promotional-banner">
