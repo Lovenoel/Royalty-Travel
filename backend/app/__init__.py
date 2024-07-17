@@ -48,10 +48,10 @@ def create_app():
 
     login_manager.init_app(app)
     login_manager.login_view = 'authorize.login'
+    login_manager.login_message_category = 'info'
     
     # Register blueprints
     from app.routes.home import main_bp  as main_bp
-    from app.routes.account import account_bp as account_bp
     from app.routes.Booking import bp as booking_bp
     from app.routes.Bus_status import bp as bus_status_bp
     from app.routes.Notification import notification_bp as notification_bp
@@ -65,7 +65,6 @@ def create_app():
     from app.routes.Users import users_bp as user_bp
 
     app.register_blueprint(main_bp, url_prefix='/main')
-    app.register_blueprint(account_bp, url_prefix='/account')
     app.register_blueprint(booking_bp, url_prefix='/booking')
     app.register_blueprint(bus_status_bp, url_prefix='/bus_status')
     app.register_blueprint(notification_bp, url_prefix='/notification')

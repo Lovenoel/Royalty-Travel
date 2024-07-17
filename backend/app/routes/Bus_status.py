@@ -1,5 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, flash, url_for, redirect, render_template
 from app.models import Bus, BusStatus, db
+from app.forms.BusStatusForm import BusStatusForm
+from datetime import datetime, timezone
 
 # Create a Blueprint for bus-related routes under '/bus_status'
 bp = Blueprint('bus_routes', __name__, url_prefix='/bus_status')
@@ -61,3 +63,24 @@ def get_bus_status():
 
     # Convert bus status objects to dictionaries and return as JSON
     return jsonify([bus.to_dict() for bus in buses])
+
+@bp.route('/add_bus', methods=['GET', 'POST'])
+def add_bus():
+    form = BusStatusForm()
+    if form.validate_on_submit():
+        bus_number = form.bus_number.data
+        status = form.status.data
+
+        # Check if the bus already exists
+        existing_bus = BusStatus.query.filter_by(bus_number=bus_number).first()
+        if existing_bus:
+            flash('Bus with this number already exists.', 'danger')
+            return redirect(url_for('bus_status.add_bus'))
+
+        new_bus = BusStatus(bus_number=bus_number, status=status, updated_at=datetime.now(timezone.utc))
+        db.session.add(new_bus)
+        db.session.commit()
+        flash('Bus added successfully.', 'success')
+        return redirect(url_for('bus_status.get_bus_status', bus_number=bus_number))
+
+    return render_template('add_bus.html', form=form)

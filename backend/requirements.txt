@@ -12,7 +12,6 @@ Werkzeug
 WTForms
 email-validator
 gunicorn
-#reportlab
 twilio
 Flask-SocketIO
 Flask-APScheduler

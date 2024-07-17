@@ -34,9 +34,11 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
     phone = db.Column(db.String(15))
+    image_file = db.Column(db.String(20), nullable=False, default='default.png')
+    is_admin = db.Column(db.Boolean, default=False)
 
     # Relationship with Booking
-    bookings =db.relationship('UserBooking', back_populates='user', lazy=True)
+    bookings =db.relationship('UserBooking', back_populates='user', overlaps="bookings", lazy=True)
 
     def __repr__(self):
         """

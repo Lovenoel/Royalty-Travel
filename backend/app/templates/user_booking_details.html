@@ -17,7 +17,7 @@
     </div>
     <div>
         <h1>User Booking Details</h1>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('booking.user_booking_details')}}" autocomplete="off">
             {{ form.hidden_tag() }}
             {{ form.username.label }} {{ form.username }}
             {{ form.departure_place.label }} {{ form.departure_place }}

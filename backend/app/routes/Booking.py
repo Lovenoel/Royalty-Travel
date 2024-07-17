@@ -41,6 +41,37 @@ def book():
     return render_template('book.html',
                            form=form)
 
+@bp.route('/user_booking_details/<int:booking_id>')
+def user_booking_details(booking_id):
+    # Fetch user booking details from the database
+    booking = UserBooking.query.get_or_404(booking_id)
+    
+    if booking:
+        form = BookingForm(obj=booking)
+        if form.validate_on_submit():
+            form.populate_obj(booking)
+            db.session.commit()
+            flash('Booking updated successfully!', 'success')
+            return redirect(url_for('booking.user_booking_details',
+                                    booking_id=booking_id))
+        return render_template('user_booking_details.html',
+                               booking=booking, form=form)
+    
+@bp.route('/passenger_booking_details', methods=['GET', 'POST'])
+def passenger_booking_details(booking_id):
+    # Fetch passenger booking details from the database
+    booking = PassengerBooking.query.get_or_404(booking_id)
+    form = BookingForm(obj=booking)
+    
+    if form.validate_on_submit():
+        form.populate_obj(booking)
+        db.session.commit()
+        flash('Booking updated successfully!', 'success')
+        return redirect(url_for('booking.passenger_booking_details',
+                                booking_id=booking_id))
+    
+    return render_template('passenger_booking_details.html',
+                           booking=booking, form=form)
 
 @bp.route('/promotions')
 def promotions():

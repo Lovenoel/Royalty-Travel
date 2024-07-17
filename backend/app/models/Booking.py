@@ -36,7 +36,7 @@ class UserBooking(BaseBooking):
     username = db.Column(db.String(100), nullable=False)
 
     # User's relationship to Booking
-    user = db.relationship('User', back_populates='bookings')
+    user = db.relationship('User', backref='user_bookings', overlaps="bookings", lazy=True)
 
     # 
     def to_dict(self):
@@ -56,7 +56,7 @@ class PassengerBooking(BaseBooking):
     passenger_id = db.Column(db.Integer, db.ForeignKey('passenger.id'), nullable=False)
     passenger_name = db.Column(db.String(100), nullable=False)
 
-    passenger = db.relationship('Passenger', backref=db.backref('passenger_bookings', lazy=True))
+    bookings = db.relationship('Passenger', backref='passenger_bookings', overlaps="bookings,passenger", lazy=True)
 
     def to_dict(self):
         data = super().to_dict()

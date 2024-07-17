@@ -3,5 +3,4 @@ __pycache__
 .env
 config.py
 app.db
-1__init__.py
 create_db.py

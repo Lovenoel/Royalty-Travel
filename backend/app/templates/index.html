@@ -28,6 +28,7 @@
                 <li><a href="{{ url_for('passengers.handle_passengers') }}">Passengers</a></li>
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                    <li><a href="{{ url_for('account') }}">Account</a></li>
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}">Login</a></li>
@@ -46,26 +47,6 @@
             </div>
         {% endfor %}
     </div>
-    <!--div>
-        <button onclick="showAddPassengerForm()">Add Passenger</button>
-    </div>
-
-    <div id="addPassengerModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAddPassengerForm()">&times;</span>
-            <form id="passengerForm">
-                {{ form.hidden_tag() }}
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" autocomplete="off" required><br>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" autocomplete="off" required><br>
-                <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" autocomplete="off" required><br>
-                <button type="button" onclick="addPassenger()">Add Passenger</button>
-                <button type="button" onclick="alertCheck()">Alert</button>
-            </form>
-        </div>
-    </div-->
     <div class=".modal-content">
         <h1>Passengers</h1>
         <ul>
@@ -82,24 +63,29 @@
                 <form method="POST" action="{{ url_for('passengers.handle_passengers') }}">
                     {{ form.hidden_tag() }}
                     <label for="username">Username:</label>
-                    {{ form.username(class="form-control", id="username") }}<br>
+                    {{ form.username(class="form-control", id="username", autocomplete="off") }}<br>
                     <label for="email">Email:</label>
-                    {{ form.email(class="form-control", id="email") }}<br>
+                    {{ form.email(class="form-control", id="email", autocomplete="off") }}<br>
                     <label for="phone">Phone:</label>
-                    {{ form.phone(class="form-control", id="phone") }}<br>
+                    {{ form.phone(class="form-control", id="phone", autocomplete="off") }}<br>
                     <button type="submit">Add Passenger</button>
                 </form>
             </div>
         </div>
     </div>
-    <h1>Users</h1>
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <h1>Fetch Users</h1>
+    <button id="fetchUsersBtn" onclick="fetchUsers()">Fetch Users</button>
     <ul id="userList"></ul>
-
-    <script src="{{ url_for('static', filename='js/users.js') }}"></script>
+    {% endif %}
     <footer>
         <p>&copy; 2024 Royalty Travel</p>
     </footer>
     <script src="{{ url_for('static', filename='js/add_passenger.js') }}"></script>
     <script src="{{ url_for('static', filename='js/showAddPassengerForm.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/users.js') }}"></script>
+    <script>
+        var isAdmin = {{ 'true' if current_user.is_admin else 'false' }};
+    </script>
 </body>
 </html>

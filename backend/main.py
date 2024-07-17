@@ -8,6 +8,7 @@ from app.utils.notifications import check_and_send_notifications
 from flask_apscheduler import APScheduler
 from app.forms.bookingForm import BookingForm
 from app.forms.passengerForm import PassengerForm
+from app.forms.BusStatusForm import BusStatusForm
 
 
 app = create_app()
@@ -72,6 +73,7 @@ def landing():
 # The index or home route of the app
 #@app.route('/')
 @app.route('/home', methods=['GET'])
+@login_required
 def index():
     form = PassengerForm()
     return render_template('index.html', posts=posts, form=form)
@@ -79,7 +81,8 @@ def index():
 @app.route('/account')
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    form = PassengerForm()
+    return render_template('account.html', title='Account', form=form)
 
 # The routes indexing booking
 @app.route('/booking', methods=['GET', 'POST'])
@@ -87,11 +90,18 @@ def booking():
     form = BookingForm()
     return render_template('book.html', form=form)
 
-@app.route('/booking/<int:booking_id>')
-def booking_detail(booking_id):
+@app.route('/booking/user_booking_details/<int:booking_id>')
+def user_booking_details(booking_id):
     # Here you would fetch the booking details from the database
     # For simplicity, let's just pass the booking_id to the template
-    return render_template('booking_detail.html', booking_id=booking_id, booking=booking)
+    return render_template('user_booking_details.html', booking_id=booking_id)
+
+@app.route('/booking/passenger_booking_details/<int:booking_id>')
+def passenger_booking_details(booking_id):
+    # Here you would fetch the booking details from the database
+    # For simplicity, let's just pass the booking_id to the template
+    return render_template('passenger_booking_details.html', booking_id=booking.id)
+
 
 @app.route('/promotions')
 def promotions():
@@ -102,6 +112,11 @@ def promotions():
 @app.route('/bus_status', methods=['GET', 'POST'])
 def bus_status():
     return render_template('bus_status.html')
+
+@app.route('/add_bus', methods=['GET', 'POST'])
+def add_bus():
+    form = BusStatusForm()
+    return render_template('')
 
 # the route that calls the notification
 @app.route('/notification', methods=['GET', 'POST'])

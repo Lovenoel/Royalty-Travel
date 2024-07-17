@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-</head>
-<body>
+{% extends "index.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+        <img class="" src="{{ image_file }}">
+        <div>
+            <h2 class="account-heading">{{ current_user.usernmae }}</h2>
+            <p class="">{{ current_user.email }}</p>
+        </div>
+    </div>
     <div class="container">
         <h2>Join Today</h2>
         <form method="POST" action="{{ url_for('authorize.register') }}" autocomplete="off">
@@ -21,8 +22,6 @@
             {{ form.password(size=32, autocomplete="off") }}
             <label for="confirm_password">Confirm Password:</label>
             {{ form.confirm_password(size=32, autocomplete="off") }}
-            <label for="is_admin">Is_Admin:</label>
-            {{ form.is_admin(size=32, autocomplete="off") }}
             {{ form.submit() }}
         </form>
     </div>
@@ -31,5 +30,5 @@
             Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
         </small>
     </div>
-</body>
-</html>
+</div>
+{% endblock content %}

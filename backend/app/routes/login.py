@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required, logout_user
 from app import db, bcrypt
-from app.forms.forms import RegistrationForm, LoginForm  # Import your forms
+from app.forms.forms import RegistrationForm, LoginForm
+from app.forms.passengerForm import PassengerForm
+from app.forms.forms import UpdateAccountForm
 from app.models import User
 
 authorize_bp = Blueprint('authorize', __name__, url_prefix='/authorize')
@@ -19,7 +21,8 @@ def register():
             user = User(username=form.username.data,
                         password=hashed_password,
                         email=form.email.data,
-                        phone=form.phone.data)
+                        phone=form.phone.data,
+                        is_admin=form.is_admin.data)
             db.session.add(user)
             db.session.commit()
             flash('Your account has been created!', 'success')
@@ -54,13 +57,28 @@ def login():
     else:
         print("Form validation failed.")  # Debug statement
             
-    return render_template('login.html', title='Login', form=form)
+    return render_template('login.html',
+                           title='Login',
+                           form=form)
 
 @authorize_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return render_template('authorize.login')
+    form = PassengerForm()
+    return render_template('index.html',
+                           form=form  )
+
+@authorize_bp.route('/account')
+@login_required
+def account():
+    form = UpdateAccountForm()
+    image_file = url_for('static',
+                         filename='images/kln.png' + current_user.image_file)
+    return render_template('account.html',
+                           title='Account',
+                           form=form,
+                           image_file=image_file)
 
             
 

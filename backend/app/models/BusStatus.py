@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime, timezone
 
 class BusStatus(db.Model):
     """
@@ -23,9 +24,10 @@ class BusStatus(db.Model):
     __tablename__ = 'BusStatus'
 
     id = db.Column(db.Integer, primary_key=True)
-    bus_number = db.Column(db.String(10))
-    status = db.Column(db.String(100))
-
+    bus_number = db.Column(db.String(20), unique=True, nullable=False)
+    status = db.Column(db.String(50), nullable=False)
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    
     __table_args__ = {'extend_existing': True}
 
     def __repr__(self):
