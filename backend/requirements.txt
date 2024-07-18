@@ -18,8 +18,8 @@ Flask-APScheduler
 flask-migrate
 flask_testing
 flask-cors
-pip install mysqlclient
-sudo apt-get update
-sudo apt-get install libmariadbclient-dev
-sudo apt-get update
-sudo apt-get install libmysqlclient-dev
+apt-get update
+apt-get install libmariadbclient-dev
+apt-get update
+apt-get install libmysqlclient-dev
+mysqlclient
