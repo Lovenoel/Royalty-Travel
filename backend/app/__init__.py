@@ -32,11 +32,9 @@ def create_app():
 
     # Set configuration from environment variables
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    #app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    app.config['DEBUG'] = True
-    app.secret_key='1acbf156e7c5a3dfe0f5cb6e3e8377156e1e2c2400b585ce8d1abe26645b47e8'
-    
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
     # Load configuration
     from config import Config
     app.config.from_object(Config)
