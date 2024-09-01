@@ -23,4 +23,3 @@ sudo apt-get update
 sudo apt-get install libmariadbclient-dev
 sudo apt-get update
 sudo apt-get install libmysqlclient-dev
-Flask-Mail
