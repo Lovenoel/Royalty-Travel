@@ -1,6 +1,5 @@
 """ This is my flask app entry file """
-
-from flask import render_template, request, g
+from flask import render_template, g, jsonify
 from flask_login import current_user, login_required
 from app import create_app
 from app.forms.forms import RegistrationForm, LoginForm
@@ -9,6 +8,7 @@ from flask_apscheduler import APScheduler
 from app.forms.bookingForm import BookingForm
 from app.forms.passengerForm import PassengerForm
 from app.forms.BusStatusForm import BusStatusForm
+from flask_wtf.csrf import generate_csrf
 
 
 app = create_app()
@@ -65,6 +65,12 @@ def teardown_request(exception):
         print("Closing the database connection")
         g.db.close()
 
+# Generates the csrf token
+@app.route('/api/csrf-token', methods=['GET'])
+def get_csrf_token():
+    token = generate_csrf()
+    return jsonify({'csrf_token': token})
+
 
 @app.route('/')
 def landing():
@@ -73,10 +79,14 @@ def landing():
 # The index or home route of the app
 #@app.route('/')
 @app.route('/home', methods=['GET'])
-@login_required
 def index():
     form = PassengerForm()
     return render_template('index.html', posts=posts, form=form)
+
+@app.route('/react')
+def react_index():
+    return render_template('react_index.html')
+
 
 @app.route('/account')
 @login_required
@@ -100,7 +110,7 @@ def user_booking_details(booking_id):
 def passenger_booking_details(booking_id):
     # Here you would fetch the booking details from the database
     # For simplicity, let's just pass the booking_id to the template
-    return render_template('passenger_booking_details.html', booking_id=booking.id)
+    return render_template('passenger_booking_details.html', booking_id=booking_id)
 
 
 @app.route('/promotions')
@@ -116,7 +126,15 @@ def bus_status():
 @app.route('/add_bus', methods=['GET', 'POST'])
 def add_bus():
     form = BusStatusForm()
-    return render_template('')
+    return render_template('addBus.html', form=form)
+
+@app.route('/bus_status/success')
+def success():
+    """
+    Route to display a success message or details of the added bus.
+    """
+    # You can pass any relevant data to the template if needed
+    return render_template('success.html')
 
 # the route that calls the notification
 @app.route('/notification', methods=['GET', 'POST'])
@@ -146,22 +164,14 @@ def login():
     form = LoginForm()
     return render_template('login.html', User=current_user, form=form)
 
-@app.route('/')
-
-# Logout route
-@app.route('/logout')
-def logout():
-    form = LoginForm()
-    return render_template('login.html', form=form)
-
 # Password change route
 @app.route('/change_password')
 def change_password():
     return render_template('profile.html')
 
-@app.route('/users')
+@app.route('/user/users')
 def get_users():
-    return render_template('')
+    return render_template('get_users.html')
 
 if __name__ == '__main__':
     # Starts the app when run directly and not import

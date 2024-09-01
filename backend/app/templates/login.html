@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+{% endblock head %}
+
+{% block content %}
     <div class="container">
         <h2>Login</h2>
         <form  action="{{ url_for('authorize.login') }}" autocomplete="off" method="POST">
@@ -31,5 +28,4 @@
             Need an account? <a class="ml-2" href="{{ url_for('authorize.register') }}">Sign Up Now</a>
         </small>
     </div>
-</body>
-</html>
+{% endblock content %}

@@ -1,43 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royalty Travel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css')}}"> <!-- Link to new CSS file -->
-</head>
-<body>
-    <div class="header">
-        <div class="logo">Royalty Travel
-            <div class="profile-photo">
-                <h5>Profile Photo</h5>
-                <label for="profile-picture-input">
-                    <img src="{{ url_for('static', filename='images/kln.png') }}" alt="Profile Picture">
-                </label>
-                <input type="file" id="profile-picture-input" accept="image/*">
-            </div>   
-        </div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('booking') }}">Bookings</a></li>
-                <li><a href="{{ url_for('bus_status') }}">Bus Status</a></li>
-                <li><a href="{{ url_for('notification') }}">Notifications</a></li>
-                <li><a href="{{ url_for('receipt') }}">Receipts</a></li>
-                <li><a href="{{ url_for('passengers.handle_passengers') }}">Passengers</a></li>
-                {% if current_user.is_authenticated %}
-                    <li><a href="{{ url_for('profile') }}">Profile</a></li>
-                    <li><a href="{{ url_for('account') }}">Account</a></li>
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </div>
+{% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css')}}">
+{% endblock head %}
+{% block content %}
+    <div>
+        <h1>
+            You are welcome to Royalty Travel. Your journey begins here.
+            <br>
+            Book now and explore the world with us.
+        </h1>
+    </div>
     <div class="content">
         {% for post in posts %}
             <div class="post">
@@ -78,14 +51,10 @@
     <button id="fetchUsersBtn" onclick="fetchUsers()">Fetch Users</button>
     <ul id="userList"></ul>
     {% endif %}
-    <footer>
-        <p>&copy; 2024 Royalty Travel</p>
-    </footer>
     <script src="{{ url_for('static', filename='js/add_passenger.js') }}"></script>
     <script src="{{ url_for('static', filename='js/showAddPassengerForm.js') }}"></script>
     <script src="{{ url_for('static', filename='js/users.js') }}"></script>
     <script>
         var isAdmin = {{ 'true' if current_user.is_admin else 'false' }};
     </script>
-</body>
-</html>
+{% endblock content %}

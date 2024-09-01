@@ -5,8 +5,7 @@ from app.forms.passengerForm import PassengerForm
 main_bp = Blueprint('main', __name__, url_prefix='/main')
 
 # The route that handles the main page
-@main_bp.route('/')
-@login_required
+@main_bp.route('/home')
 def home():
     """The app home page"""
     form = PassengerForm()

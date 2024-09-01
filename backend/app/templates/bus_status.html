@@ -1,36 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus Status - Royalty Travel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bus_status.css') }}">
-</head>
-<body>
-    <div class="header">
-        <div class="logo">Royalty Travel</div>
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('booking') }}">Bookings</a>
-            <a href="{{ url_for('profile')}}">Profile</a>
-        </nav>
-    </div>
-    <div class="container">
-        <h2>Bus Status</h2>
-        <p>Enter the bus number to get the current status:</p>
-        <form method="GET" action="/bus_status">
-            <label for="bus_number">Bus Number:</label>
-            <input type="text" id="bus_number" name="bus_number" required>
-            <button type="submit">Check Status</button>
-        </form>
-        {% if bus_status %}
-            <h3>Status for Bus {{ bus_number }}:</h3>
-            <p>{{ bus_status }}</p>
-        {% endif %}
-    </div>
-    <footer>
-        <p>&copy; 2024 Royalty Travel</p>
-    </footer>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bus_status.css') }}">
+{% endblock head %}
+
+{% block content %}
+<!--div class="header">
+    <div class="logo">Royalty Travel</div>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('booking') }}">Bookings</a>
+        <a href="{{ url_for('profile')}}">Profile</a>
+    </nav>
+</div-->
+<div class="container">
+    <h2>Bus Status</h2>
+    <p>Enter the bus number to get the current status:</p>
+    <form method="GET" action="{{ url_for('bus_status.get_bus_status')}}" autocomplete="off">
+        <label for="bus_number">Bus Number:</label>
+        <input type="text" id="bus_number" name="bus_number" autocomplete="off" required>
+        <button type="submit">Check Status</button>
+    </form>
+    {% if bus_status %}
+        <h3>Status for Bus {{ bus_number }}:</h3>
+        <p>{{ bus_status }}</p>
+    {% endif %}
+</div>
+{% endblock content %}

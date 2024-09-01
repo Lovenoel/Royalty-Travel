@@ -8,6 +8,7 @@ from .Notification import Notification
 from .BusStatus import BusStatus
 from .Receipt import Receipt
 from .User import User
+from .Post import Post
 
 # Make the models available to the all application
-__all__ = ['Passenger', 'UserBooking', 'PassengerBooking', 'Bus', 'Notification', 'BusStatus', 'Receipt', 'User']
+__all__ = ['Passenger', 'UserBooking', 'PassengerBooking', 'Bus', 'Notification', 'BusStatus', 'Receipt', 'User', 'Post']

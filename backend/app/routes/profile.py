@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, fresh_login_required
 from werkzeug.utils import secure_filename
 import os
 from app import db, bcrypt
@@ -63,6 +63,11 @@ def upload_profile_picture():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)  # Secure the filename
         file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))  # Save the file to the upload folder
+
+        # Update the user's profilepictire path in the database
+        current_user.profile_picture = filename
+        db.session.commit()
+        flash('Profile picture updated successfully!', 'success')
         return jsonify(success=True, message='File successfully uploaded')
     else:
         return jsonify(success=False, message='File type not allowed')

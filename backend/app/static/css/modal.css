@@ -1,4 +1,8 @@
 /* The Modal (background) */
+
+h1 {
+    color: blue;
+}
 .modal {
     display: none;
     position: fixed;

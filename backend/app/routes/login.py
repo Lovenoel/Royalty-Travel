@@ -56,37 +56,41 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     else:
         print("Form validation failed.")  # Debug statement
+    
+    next_page = request.args.get('next')
             
     return render_template('login.html',
                            title='Login',
-                           form=form)
+                           form=form,
+                           next_page=next_page
+                           )
 
 @authorize_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    form = PassengerForm()
-    return render_template('index.html',
-                           form=form  )
+    return redirect(url_for('main.home'))
 
-@authorize_bp.route('/account')
+@authorize_bp.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
+    print(f"Username: {current_user.username}")
+    print(f"Email: {current_user.email}")
     form = UpdateAccountForm()
-    image_file = url_for('static',
-                         filename='images/kln.png' + current_user.image_file)
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated', 'success')
+        return redirect(url_for('authorize.accont'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    image_file = (url_for('static',
+                         filename='images/kln.png' 
+                         if current_user.profile_picture is None
+                         else 'uploads/' + current_user.profile_picture))
     return render_template('account.html',
                            title='Account',
                            form=form,
-                           image_file=image_file)
-
-            
-
-
-
-
-
-
-
-
-        
+                           image_file=image_file)     

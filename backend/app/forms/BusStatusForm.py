@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, DateTimeField
 from wtforms.validators import DataRequired
 
 class BusStatusForm(FlaskForm):
@@ -9,4 +9,5 @@ class BusStatusForm(FlaskForm):
         ('Delayed', 'Delayed'),
         ('Cancelled', 'Cancelled')
     ], validators=[DataRequired()])
+    updated = DateTimeField('Date & Time', format='%m/%d/%Y %H:%M', validators=[DataRequired()])
     submit = SubmitField('Add Bus')

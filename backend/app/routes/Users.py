@@ -13,14 +13,15 @@ def get_users():
     if not current_user.is_admin:
         return jsonify({'error': 'Unauthorized access'}), 403
     
-    users = User.query.all()
-    user_list = []
-    for user in users:
-        user_data = {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email,
-            'phone': user.phone
-        }
-        user_list.append(user_data)
-    return jsonify(user_list)
+    else:
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_data = {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'phone': user.phone
+            }
+            user_list.append(user_data)
+        return jsonify(user_list)

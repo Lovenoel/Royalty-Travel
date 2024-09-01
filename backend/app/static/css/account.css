@@ -1,0 +1,15 @@
+/* Profile Picture Container */
+#profile_photo img {
+    width: 5px; /* Fixed width */
+    height: 5px; /* Fixed height */
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    border-radius: 50%; /* Makes the image round */
+    border: 2px solid #ddd; /* Adds a border around the image */
+}
+
+/* Optional: Add hover effect */
+#profile_photo img:hover {
+    border-color: #007bff; /* Change border color on hover */
+    transform: scale(1.05); /* Slightly scale the image on hover */
+    transition: all 0.3s ease; /* Smooth transition */
+}

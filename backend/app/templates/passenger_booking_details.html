@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Details</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}">
-</head>
-<body>
-    <div class="header">
-        <div class="logo">Royalty Travel</div>
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('booking') }}">Bookings</a>
-            <a href="{{ url_for('profile') }}">Profile</a>
-        </nav>
-    </div>
-    <div>
-        <h1>Passenger Booking Details</h1>
-        <form method="POST"  action="{{ url_for('booking.passenger_booking_details', booking_id=booking.id) }}">
-            {{ form.hidden_tag() }}
-            {{ form.passenger_name.label }} {{ form.passenger_name }}
-            {{ form.departure_place.label }} {{ form.departure_place }}
-            {{ form.destination.label }} {{ form.destination }}
-            {{ form.date_time.label }} {{ form.date_time }}
-            {{ form.fare.label }} {{ form.fare }}
-            <button type="submit">Update Booking</button>
-        </form>
-    </div>
-    <div class="container">
-        <h1>Booking Details</h1>
-        <p>Details for Booking ID: {{ booking.id }}</p>
-        <!-- Here you would display the actual booking details fetched from the database -->
-        <ul>
-            <li>Passenger ID: {{ booking.passenger_id }}</li>
-            <li>Departure Place: {{ booking.departure_place }}</li>
-            <li>Destination: {{ booking.destination }}</li>
-            <li>Date and Time: {{ booking.data_time }}</li>
-            <li>Fare: {{ booking.fare }}</li>
-        </ul>
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Details</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/booking.css') }}">
+{% endblock head %}
+
+{% block content %}
+<div>
+    <h1>Passenger Booking Details</h1>
+    <form method="POST"  action="{{ url_for('booking.passenger_booking_details', booking_id=booking.id) }}">
+        {{ form.hidden_tag() }}
+        {{ form.passenger_name.label }} {{ form.passenger_name }}
+        {{ form.departure_place.label }} {{ form.departure_place }}
+        {{ form.destination.label }} {{ form.destination }}
+        {{ form.date_time.label }} {{ form.date_time }}
+        {{ form.fare.label }} {{ form.fare }}
+        <button type="submit">Update Booking</button>
+    </form>
+</div>
+<div class="container">
+    <h1>Booking Details</h1>
+    <p>Details for Booking ID: {{ booking.id }}</p>
+    <!-- Here you would display the actual booking details fetched from the database -->
+    <ul>
+        <li>Passenger ID: {{ booking.passenger_id }}</li>
+        <li>Departure Place: {{ booking.departure_place }}</li>
+        <li>Destination: {{ booking.destination }}</li>
+        <li>Date and Time: {{ booking.data_time }}</li>
+        <li>Fare: {{ booking.fare }}</li>
+    </ul>
+</div>
+{% endblock content %}

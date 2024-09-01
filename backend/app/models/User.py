@@ -1,5 +1,5 @@
 from app import db, bcrypt
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 
@@ -30,15 +30,17 @@ class User(UserMixin, db.Model):
 
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(150))
+    username = db.Column(db.String(150), nullable = False)
     email = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(150), nullable=False)
+    password = db.Column(db.String(60), nullable=False)
     phone = db.Column(db.String(15))
-    image_file = db.Column(db.String(20), nullable=False, default='default.png')
+    profile_picture = db.Column(db.String(120), nullable=True)
     is_admin = db.Column(db.Boolean, default=False)
 
+    posts = db.relationship('Post', backref = 'author', lazy = True)
+
     # Relationship with Booking
-    bookings =db.relationship('UserBooking', back_populates='user', overlaps="bookings", lazy=True)
+    user_bookings =db.relationship('UserBooking', backref='user', lazy=True)
 
     def __repr__(self):
         """
@@ -56,7 +58,7 @@ class User(UserMixin, db.Model):
         Args:
         - password: Plain text password to be hashed and stored securely.
         """
-        self.password = generate_password_hash(password)
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
         """

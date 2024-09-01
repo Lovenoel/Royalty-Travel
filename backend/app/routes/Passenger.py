@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, flash
 from app.models import Passenger
 from app import db
 from sqlalchemy.exc import IntegrityError
@@ -44,8 +44,10 @@ def handle_passengers():
                 phone=data['phone'])  # Create a new Passenger object
             db.session.add(new_passenger)  # Add new passenger to the session
             db.session.commit()  # Commit changes to the database
+            flash('Passenger created successfully', 'success')
             # Return newly created passenger details with status code 201
-            return jsonify(new_passenger.to_dict()), 201
+            return jsonify({"Message": "Passenger created successfully"}), 201
+            # return jsonify(new_passenger.to_dict()), 201
         except IntegrityError as e:
             db.session.rollback()  # Rollback the session in case of an error
             error_message = str(e.orig)  # Get the original error message from SQLAlchemy

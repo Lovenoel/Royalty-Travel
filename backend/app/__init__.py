@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from flask_login import LoginManager
@@ -35,6 +35,10 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
+    # The UPLOAD_FOLDER configuration
+    app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'app/static/uploads')
+
+
     # Load configuration
     from config import Config
     app.config.from_object(Config)
@@ -51,7 +55,7 @@ def create_app():
     # Register blueprints
     from app.routes.home import main_bp  as main_bp
     from app.routes.Booking import bp as booking_bp
-    from app.routes.Bus_status import bp as bus_status_bp
+    from app.routes.Bus_status import bp as bus_status
     from app.routes.Notification import notification_bp as notification_bp
     from app.routes.Passenger import bp as passenger_bp
     from app.routes.Receipts import receipts_bp as receipt_bp
@@ -61,10 +65,11 @@ def create_app():
     from app.routes.profile import profile_bp as profile_bp
     from app.routes.booking_details import booking_details_bp as booking_details_bp
     from app.routes.Users import users_bp as user_bp
+    from app.routes.payment import payment_bp as payment_bp
 
     app.register_blueprint(main_bp, url_prefix='/main')
     app.register_blueprint(booking_bp, url_prefix='/booking')
-    app.register_blueprint(bus_status_bp, url_prefix='/bus_status')
+    app.register_blueprint(bus_status, url_prefix='/bus_status')
     app.register_blueprint(notification_bp, url_prefix='/notification')
     app.register_blueprint(passenger_bp, url_prefix='/passenger')
     app.register_blueprint(receipt_bp, url_prefix='/receipt')
@@ -74,7 +79,7 @@ def create_app():
     app.register_blueprint(profile_bp, url_prefix='/profile')
     app.register_blueprint(booking_details_bp, url_prefix='/booking_details')
     app.register_blueprint(user_bp, url_prefix='/user')
-    
+    app.register_blueprint(payment_bp, url_prefix='/payment')
     return app
 
 from app.models.User import User

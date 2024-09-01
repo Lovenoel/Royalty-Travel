@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css')}}">
+    <!--link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css')}}"-->
+    <link rel=" stylesheet" href="{{ url_for('static', filename='css/navigation_bar.css')}}">
+    <link rel=" stylesheet" href="{{ url_for('static', filename='css/flash.css')}}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="logo">Royalty Travel
+                <div class="profile-photo">
+                    <h5>Profile Photo</h5>
+                    <label for="profile-picture-input">
+                        {% if current_user.profile_picture %}
+                            <img src="{{ url_for('static', filename='uploads/' + current_user.profile_picture) }}" alt="Profile Picture">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='images/kln.png') }}" alt="Profile Picture">
+                        {% endif %}
+                    </label>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="file" id="profile-picture-input" accept="image/*">
+                </div>   
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('booking') }}">Bookings</a></li>
+                    <li><a href="{{ url_for('bus_status') }}">Bus Status</a></li>
+                    <li><a href="{{ url_for('notification') }}">Notifications</a></li>
+                    <li><a href="{{ url_for('receipt') }}">Receipts</a></li>
+                    <li><a href="{{ url_for('passengers.handle_passengers') }}">Passengers</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                        <li><a href="{{ url_for('authorize.account') }}">Account</a></li>
+                        <li><a href="{{ url_for('authorize.logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('authorize.login') }}">Login</a></li>
+                        <li><a href="{{ url_for('authorize.register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <main>
+            <!-- Flash messages display section -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}">
+                        {{ messages }}
+                      </div>
+                    {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2024 Royalty Travel</p>
+    </footer>
+</body>
+</html>

@@ -1,34 +1,38 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css')}}">
+
+{% endblock head %}
 {% block content %}
 <div class="content-section">
-    <div class="media">
-        <img class="" src="{{ image_file }}">
-        <div>
-            <h2 class="account-heading">{{ current_user.usernmae }}</h2>
-            <p class="">{{ current_user.email }}</p>
+    {% if current_user.is_authenticated %}
+        <div class="media">
+            <div>
+                <img id="profile_photo" src="{{ image_file }}">
+                <h2 class="account-heading">{{ current_user.username }}</h2>
+                <p class="">{{ current_user.email }}</p>
+            </div>
         </div>
-    </div>
-    <div class="container">
-        <h2>Join Today</h2>
-        <form method="POST" action="{{ url_for('authorize.register') }}" autocomplete="off">
-            {{ form.hidden_tag() }}
-            <label for="username">Username:</label>
-            {{ form.username(size=32, autocomplete="off") }}
-            <label for="email">Email:</label>
-            {{ form.email(size=32, autocomplete="off") }}
-            <label for="phone">Phone:</label>
-            {{ form.phone(size=32, autocomplete="off") }}
-            <label for="password">Password:</label>
-            {{ form.password(size=32, autocomplete="off") }}
-            <label for="confirm_password">Confirm Password:</label>
-            {{ form.confirm_password(size=32, autocomplete="off") }}
-            {{ form.submit() }}
-        </form>
-    </div>
-    <div class="border-top pt-3">
-        <small>
-            Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
-        </small>
-    </div>
+    {% else %}
+        <div class="container">
+            <h2>Account Info</h2>
+            <form method="POST" action="{{ url_for('authorize.register') }}" autocomplete="off">
+                {{ form.hidden_tag() }}
+                <label for="username">Username:</label>
+                {{ form.username(size=32, autocomplete="off") }}
+                <label for="email">Email:</label>
+                {{ form.email(size=32, autocomplete="off") }}
+                <label for="phone">Phone:</label>
+                {{ form.phone(size=32, autocomplete="off") }}
+                {{ form.submit() }}
+            </form>
+        </div>
+        <div class="border-top pt-3">
+            <small>
+                Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+            </small>
+        </div>
+    {% endif %}
 </div>
 {% endblock content %}

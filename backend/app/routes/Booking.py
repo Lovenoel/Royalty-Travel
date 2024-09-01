@@ -41,7 +41,7 @@ def book():
     return render_template('book.html',
                            form=form)
 
-@bp.route('/user_booking_details/<int:booking_id>')
+@bp.route('/user_booking_details/<int:booking_id>', methods=['GET', 'POST'])
 def user_booking_details(booking_id):
     # Fetch user booking details from the database
     booking = UserBooking.query.get_or_404(booking_id)
@@ -57,7 +57,7 @@ def user_booking_details(booking_id):
         return render_template('user_booking_details.html',
                                booking=booking, form=form)
     
-@bp.route('/passenger_booking_details', methods=['GET', 'POST'])
+@bp.route('/passenger_booking_details/<int:booking_id>', methods=['GET', 'POST'])
 def passenger_booking_details(booking_id):
     # Fetch passenger booking details from the database
     booking = PassengerBooking.query.get_or_404(booking_id)

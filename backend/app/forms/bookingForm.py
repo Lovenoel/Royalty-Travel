@@ -10,4 +10,5 @@ class BookingForm(FlaskForm):
     departure_place = StringField('Departure Place', validators=[DataRequired()])
     destination = StringField('Destination', validators=[DataRequired()])
     date_time = DateTimeField('Date & Time', format='%m/%d/%Y %H:%M', validators=[DataRequired()])
+    fare = StringField('Fare', validators=[DataRequired()])
     submit = SubmitField('Book Now')

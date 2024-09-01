@@ -1,38 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Receipt</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.css')}}">
-</head>
-<body>
-    <div class="header">
-        <div class="logo">Royalty Travel</div>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                <li><a href="{{ url_for('booking') }}">Bookings</a></li>
-                <li><a href="{{ url_for('bus_status') }}">Bus Status</a></li>
-                <li><a href="{{ url_for('notification') }}">Notifications</a></li>
-                <li><a href="{{ url_for('receipt') }}">Receipts</a></li>
-            </ul>
-        </nav>
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<!--div class="header">
+    <div class="logo">Royalty Travel</div>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('booking') }}">Bookings</a></li>
+            <li><a href="{{ url_for('bus_status') }}">Bus Status</a></li>
+            <li><a href="{{ url_for('notification') }}">Notifications</a></li>
+            <li><a href="{{ url_for('receipt') }}">Receipts</a></li>
+        </ul>
+    </nav>
+</div-->
+<div class="container">
+    <h2>Booking Receipt</h2>
+    <div class="receipt-details">
+        <p><strong>Booking ID:</strong> {{ booking_id }}</p>
+        <p><strong>Passenger Name:</strong> {{ passenger_name }}</p>
+        <p><strong>Departure Place:</strong> {{ departure_place }}</p>
+        <p><strong>Destination:</strong> {{ destination }}</p>
+        <p><strong>Date & Time:</strong> {{ date_time }}</p>
+        <p><strong>Status:</strong> {{ status }}</p>
+        <p><strong>Amount Paid:</strong> {{ amount_paid }}</p>
     </div>
-    <div class="container">
-        <h2>Booking Receipt</h2>
-        <div class="receipt-details">
-            <p><strong>Booking ID:</strong> {{ booking_id }}</p>
-            <p><strong>Passenger Name:</strong> {{ passenger_name }}</p>
-            <p><strong>Departure Place:</strong> {{ departure_place }}</p>
-            <p><strong>Destination:</strong> {{ destination }}</p>
-            <p><strong>Date & Time:</strong> {{ date_time }}</p>
-            <p><strong>Status:</strong> {{ status }}</p>
-            <p><strong>Amount Paid:</strong> {{ amount_paid }}</p>
-        </div>
-    </div>
-    <footer>
-        <p>&copy; 2024 Royalty Travel</p>
-    </footer>
-</body>
-</html>
+</div>
+{% endblock content %}

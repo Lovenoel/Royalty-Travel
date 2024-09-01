@@ -4,7 +4,7 @@ from app.forms.BusStatusForm import BusStatusForm
 from datetime import datetime, timezone
 
 # Create a Blueprint for bus-related routes under '/bus_status'
-bp = Blueprint('bus_routes', __name__, url_prefix='/bus_status')
+bp = Blueprint('bus_status', __name__, url_prefix='/bus_status')
 
 @bp.route('/enter_bus/<int:bus_id>', methods=['POST'])
 def enter_bus(bus_id):
@@ -74,13 +74,23 @@ def add_bus():
         # Check if the bus already exists
         existing_bus = BusStatus.query.filter_by(bus_number=bus_number).first()
         if existing_bus:
-            flash('Bus with this number already exists.', 'danger')
-            return redirect(url_for('bus_status.add_bus'))
+            print('Bus exists.')
+            return jsonify ({
+                "message": "Bus already exits"
+             })
+            #flash('Bus with this number already exists.', 'danger')
+        return redirect(url_for('bus_status.add_bus'))
 
-        new_bus = BusStatus(bus_number=bus_number, status=status, updated_at=datetime.now(timezone.utc))
-        db.session.add(new_bus)
-        db.session.commit()
-        flash('Bus added successfully.', 'success')
-        return redirect(url_for('bus_status.get_bus_status', bus_number=bus_number))
-
-    return render_template('add_bus.html', form=form)
+    new_bus = BusStatus(
+        bus_number=form.bus_number.data,
+        status=form.status,
+        updated_at=datetime.now(timezone.utc)
+        )
+    print('The bus has been added')
+    print(form.errors)
+    db.session.add(new_bus)
+    db.session.commit()
+    flash('Bus added successfully.', 'success')
+    return redirect(url_for('success'))
+    # return redirect(url_for('bus_status.get_bus_status', bus_number=bus_number))
+    #return render_template('addBus.html', form=form)
