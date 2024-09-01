@@ -4,3 +4,4 @@ __pycache__
 config.py
 app.db
 create_db.py
+deploy.py
