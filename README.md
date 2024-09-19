@@ -39,7 +39,9 @@ Register and log in as a user
 
 ## Contributing
 Contributions are welcome! To contribute to Royalty Travel:
+
 1 - Fork the repository.
+
 2 - Create a new branch:
 git checkout -b feature-branch
 
