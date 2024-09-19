@@ -54,6 +54,7 @@ class PassengerBooking(BaseBooking):
     passenger_name = db.Column(db.String(100), nullable=False)
 
     def to_dict(self):
+        """Converts the passenger object to a dictionary representation."""
         data = super().to_dict()
         data.update({
             'passenger_id': self.passenger_id,

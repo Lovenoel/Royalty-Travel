@@ -10,9 +10,10 @@ bp = Blueprint('booking', __name__, url_prefix='/booking')
 
 @bp.route('/book', methods=['GET', 'POST'])
 def book():
-    # Handles the booking process
+    """Handles the booking process"""
     form = BookingForm()
     if form.validate_on_submit():
+
         # Handles registered user booking
         if current_user.is_authenticated:
             booking = UserBooking(
@@ -43,7 +44,7 @@ def book():
 
 @bp.route('/user_booking_details/<int:booking_id>', methods=['GET', 'POST'])
 def user_booking_details(booking_id):
-    # Fetch user booking details from the database
+    """Fetch user booking details from the database"""
     booking = UserBooking.query.get_or_404(booking_id)
     
     if booking:
@@ -59,7 +60,7 @@ def user_booking_details(booking_id):
     
 @bp.route('/passenger_booking_details/<int:booking_id>', methods=['GET', 'POST'])
 def passenger_booking_details(booking_id):
-    # Fetch passenger booking details from the database
+    """Fetch passenger booking details from the database"""
     booking = PassengerBooking.query.get_or_404(booking_id)
     form = BookingForm(obj=booking)
     
@@ -75,7 +76,7 @@ def passenger_booking_details(booking_id):
 
 @bp.route('/promotions')
 def promotions():
-    # Fetch promotions from the database
+    """Fetch promotions from the database"""
     promotions = Promotion.query.all()  # Retrieve all promotions from the database
 
     return render_template('promotions.html',

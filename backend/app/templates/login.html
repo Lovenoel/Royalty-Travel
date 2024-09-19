@@ -20,7 +20,7 @@
             {{ form.submit() }}
         </form>
         <small class="text-muted ml-2">
-            <a href="#">Forgot password</a>
+            <a href="{{ url_for('authorize.reset_request')}}">Forgot password</a>
         </small>
     </div>
     <div class="border-top pt-3">

@@ -7,7 +7,7 @@ booking_details_bp = Blueprint('booking_details', __name__, url_prefix='/booking
 
 @booking_details_bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
 def booking_details(booking_id):
-    # Attempt to fetch a UserBooking first
+    """Attempts to fetch a UserBooking first"""
     booking = UserBooking.query.get(booking_id)
     
     if booking:

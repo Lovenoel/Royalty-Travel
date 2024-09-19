@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block head %}{% endblock %}
+{% block content %}
+<div class="container">
+        <h2>Request Password Reset</h2>
+        <form  action="{{ url_for('authorize.reset_request') }}" autocomplete="off" method="POST">
+            {{ form.hidden_tag() }}
+            <!--  -->
+            <label for="email">Email:</label>
+            {{ form.email(size=32, autocomplete="off") }}
+            {{ form.submit() }}
+        </form>
+    </div>
+{% endblock %}

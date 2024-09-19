@@ -7,6 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
+from flask_mail import Mail
 
 # Load environment variables from .env file
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -18,6 +19,7 @@ bcrypt = Bcrypt()
 migrate = Migrate()
 login_manager = LoginManager()
 csrf = CSRFProtect()
+mail = Mail()
 
 
 def create_app():
@@ -25,15 +27,20 @@ def create_app():
     app = Flask(__name__, static_folder='static')
     csrf.init_app(app)
     CORS(app)  # This will enable CORS for all routes
+    Mail(app)
 
     # Load environment variables from .env file
     basedir = os.path.abspath(os.path.dirname(__file__))
     load_dotenv(os.path.join(basedir, '..', '.env'))
 
-    # Set configuration from environment variables
+    '''# Set configuration from environment variables
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    '''
+
+    # Load configuration from Config class
+    app.config.from_object('config.Config')
 
     # The UPLOAD_FOLDER configuration
     app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'app/static/uploads')
@@ -66,6 +73,7 @@ def create_app():
     from app.routes.booking_details import booking_details_bp as booking_details_bp
     from app.routes.Users import users_bp as user_bp
     from app.routes.payment import payment_bp as payment_bp
+    from app.routes.posts import post_bp as post_bp
 
     app.register_blueprint(main_bp, url_prefix='/main')
     app.register_blueprint(booking_bp, url_prefix='/booking')
@@ -80,6 +88,7 @@ def create_app():
     app.register_blueprint(booking_details_bp, url_prefix='/booking_details')
     app.register_blueprint(user_bp, url_prefix='/user')
     app.register_blueprint(payment_bp, url_prefix='/payment')
+    app.register_blueprint(post_bp, url_prefix='/post')
     return app
 
 from app.models.User import User

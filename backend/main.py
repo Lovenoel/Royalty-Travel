@@ -8,12 +8,16 @@ from flask_apscheduler import APScheduler
 from app.forms.bookingForm import BookingForm
 from app.forms.passengerForm import PassengerForm
 from app.forms.BusStatusForm import BusStatusForm
+from app.forms.posts import PostForm
+from app.models.Post import Post
 from flask_wtf.csrf import generate_csrf
+from posts import posts
+import json
 
 
 app = create_app()
 
-posts = [
+"""posts = [
     {
         "name": "John Peter",
         "email": "peterjohn12@gmail.com",
@@ -26,11 +30,12 @@ posts = [
         "phone": "0707836901"
     }
 ]
+"""
 
 promotions = [
         {
             'title': 'Special Discount!',
-            'description': 'Get 20% off on all bookings this month.'
+            'description': 'Get 20"%" off on all bookings this month.'
         },
         {
             'title': 'Summer Sale!',
@@ -81,6 +86,14 @@ def landing():
 @app.route('/home', methods=['GET'])
 def index():
     form = PassengerForm()
+    post = Post.query.all()
+    is_admin = json.dumps(current_user.is_admin) if current_user.is_authenticated else 'false'
+    return render_template('index.html', posts=posts, form=form, is_admin=is_admin)
+@app.route('/new', methods=['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm
+    posts = Post.query.all()
     return render_template('index.html', posts=posts, form=form)
 
 @app.route('/react')

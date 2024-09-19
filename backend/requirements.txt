@@ -23,3 +23,7 @@ sudo apt-get update
 sudo apt-get install libmariadbclient-dev
 sudo apt-get update
 sudo apt-get install libmysqlclient-dev
+xhtml2pdf
+celery
+redis
+mysql-connector-python

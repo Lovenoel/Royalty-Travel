@@ -66,10 +66,14 @@ def get_bus_status():
 
 @bp.route('/add_bus', methods=['GET', 'POST'])
 def add_bus():
+    """
+    Endpoint for adding a new bus
+    Returns
+    -A new bus is created and saved to the database
+    """
     form = BusStatusForm()
     if form.validate_on_submit():
         bus_number = form.bus_number.data
-        status = form.status.data
 
         # Check if the bus already exists
         existing_bus = BusStatus.query.filter_by(bus_number=bus_number).first()

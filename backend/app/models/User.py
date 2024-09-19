@@ -1,6 +1,11 @@
 from app import db, bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask import current_app
+#from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired, BadSignature
+import jwt
+from datetime import datetime, timedelta
+from sqlalchemy.sql import func
 
 
 class User(UserMixin, db.Model):
@@ -71,3 +76,19 @@ class User(UserMixin, db.Model):
         - bool: True if the password matches, False otherwise.
         """
         return bcrypt.check_password_hash(self.password, password)
+    
+    def get_reset_token(self, expires_in=1800):
+        expires_at = func.now() + timedelta(seconds=expires_in)
+        token = jwt.encode({'reset_password': self.id, 'exp': expires_at},
+                           current_app.config['SECRET_KEY'],
+                           algorithm='HS256')
+        return token
+
+    @staticmethod
+    def verify_reset_token(token):
+        try:
+            decoded_token = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])
+            user_id = decoded_token.get('reset_password')
+        except Exception as e:
+            return None
+        return User.query.get(user_id)

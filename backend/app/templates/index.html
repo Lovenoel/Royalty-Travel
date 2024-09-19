@@ -14,9 +14,9 @@
     <div class="content">
         {% for post in posts %}
             <div class="post">
-                <h2>{{ post.name }}</h2>
-                <p>Email: {{ post.email }}</p>
-                <p>Phone: {{ post.phone }}</p>
+                <h2>{{ posts.author }}</h2>
+                <p>Title: {{ posts.title }}</p>
+                <p>Content: {{ posts.content }}</p>
             </div>
         {% endfor %}
     </div>
@@ -55,6 +55,7 @@
     <script src="{{ url_for('static', filename='js/showAddPassengerForm.js') }}"></script>
     <script src="{{ url_for('static', filename='js/users.js') }}"></script>
     <script>
-        var isAdmin = {{ 'true' if current_user.is_admin else 'false' }};
+        <!--var isAdmin = {{ 'true' if current_user.is_admin else 'false' }};-->
+        var isAdmin = {{ is_admin }};
     </script>
 {% endblock content %}

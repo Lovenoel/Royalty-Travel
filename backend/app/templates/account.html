@@ -9,7 +9,7 @@
     {% if current_user.is_authenticated %}
         <div class="media">
             <div>
-                <img id="profile_photo" src="{{ image_file }}">
+                <!--img id="profile_photo" src="{{ image_file }}"-->
                 <h2 class="account-heading">{{ current_user.username }}</h2>
                 <p class="">{{ current_user.email }}</p>
             </div>
@@ -25,6 +25,8 @@
                 {{ form.email(size=32, autocomplete="off") }}
                 <label for="phone">Phone:</label>
                 {{ form.phone(size=32, autocomplete="off") }}
+                <label for="picture">Picture:</label>
+                {{ form.picture }}
                 {{ form.submit() }}
             </form>
         </div>

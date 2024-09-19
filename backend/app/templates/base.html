@@ -8,6 +8,7 @@
     <!--link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css')}}"-->
     <link rel=" stylesheet" href="{{ url_for('static', filename='css/navigation_bar.css')}}">
     <link rel=" stylesheet" href="{{ url_for('static', filename='css/flash.css')}}">
+    <link rel="icon" href="{{ url_for('static', filename='images/kln.png')}}">
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -39,6 +40,7 @@
                         <li><a href="{{ url_for('profile') }}">Profile</a></li>
                         <li><a href="{{ url_for('authorize.account') }}">Account</a></li>
                         <li><a href="{{ url_for('authorize.logout') }}">Logout</a></li>
+                        <li><a href="{{ url_for('post.new_post') }}">New Post</a></li>
                     {% else %}
                         <li><a href="{{ url_for('authorize.login') }}">Login</a></li>
                         <li><a href="{{ url_for('authorize.register') }}">Register</a></li>
