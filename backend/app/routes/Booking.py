@@ -1,3 +1,6 @@
+"""A module that handles all the booking processes for both a
+registered user and a guest passenger."""
+
 from flask import Blueprint, render_template, redirect, url_for, flash
 from app import db
 from app.forms.bookingForm import BookingForm
@@ -7,6 +10,7 @@ from app.models.Promotions import Promotion
 from flask_login import current_user
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')
+
 
 @bp.route('/book', methods=['GET', 'POST'])
 def book():

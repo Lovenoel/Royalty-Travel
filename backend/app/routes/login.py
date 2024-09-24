@@ -1,3 +1,6 @@
+"""A module that handles registering a new user, login for
+a registered user, user account details and password resetting."""
+
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
 from flask_login import current_user, login_user, logout_user, login_required, logout_user
 from app import db, bcrypt, mail
@@ -8,6 +11,7 @@ from flask_mail import Message
 from app.email_utils import send_reset_email
 
 authorize_bp = Blueprint('authorize', __name__, url_prefix='/authorize')
+
 
 # Registration route
 @authorize_bp.route('/register', methods=['GET', 'POST'])
@@ -36,6 +40,7 @@ def register():
         else:
             flash('Email already exists. Please use a different email.', 'danger')
     return render_template('register.html', title='Register', form=form)
+
 
 # Login route
 @authorize_bp.route('/login', methods=['GET', 'POST'])
@@ -76,12 +81,14 @@ def login():
                            next_page=next_page
                            )
 
+
 @authorize_bp.route('/logout')
 @login_required
 def logout():
     """ Logs the current user out"""
     logout_user()
     return redirect(url_for('index'))
+
 
 @authorize_bp.route('/account', methods=['GET', 'POST'])
 @login_required
@@ -130,6 +137,9 @@ def reset_request():
 
 @authorize_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_token(token):
+    """
+    Endpoint for retrieving a  password reset token
+    """
     user = User.verify_reset_token(token)
 
     if user is None:

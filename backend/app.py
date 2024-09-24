@@ -11,7 +11,6 @@ from app.forms.BusStatusForm import BusStatusForm
 from app.forms.posts import PostForm
 from app.models.Post import Post
 from flask_wtf.csrf import generate_csrf
-from posts import posts
 import json
 
 
@@ -88,7 +87,7 @@ def index():
     form = PassengerForm()
     post = Post.query.all()
     is_admin = json.dumps(current_user.is_admin) if current_user.is_authenticated else 'false'
-    return render_template('index.html', posts=posts, form=form, is_admin=is_admin)
+    return render_template('index.html', posts=post, form=form, is_admin=is_admin)
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
 def new_post():

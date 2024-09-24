@@ -1,3 +1,6 @@
+"""A module that fetches booking details and updates them
+for both a registered user and a guest passenger"""
+
 from flask import render_template, Blueprint, redirect, url_for, request, flash
 from app import db
 from app.forms.bookingForm import BookingForm

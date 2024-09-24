@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Length, Email, ValidationError
 from app.models import Passenger
 
 class PassengerForm(FlaskForm):
+    """Form for passenger to book a ticket."""
     username = StringField('Username',
                            validators=[DataRequired(),
                                        Length(min=2, max=20)])

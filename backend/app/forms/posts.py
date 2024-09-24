@@ -4,6 +4,7 @@ from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 
 class PostForm(FlaskForm):
+    """Form for user to create a post."""
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')

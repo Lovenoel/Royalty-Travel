@@ -1,4 +1,7 @@
-# app/forms.py
+"""
+A file to handle a bookingform
+- containing the booking credentials
+"""
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateTimeField, SubmitField
 from wtforms.validators import DataRequired

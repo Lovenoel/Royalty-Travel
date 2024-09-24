@@ -39,6 +39,7 @@ class Notification(db.Model):
     read = db.Column(db.Boolean, default=False)
 
     def to_dict(self):
+        """Converts a notification object to a dictionary representation."""
         return {
             'id': self.id,
             'title': self.title,

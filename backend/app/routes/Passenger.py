@@ -1,3 +1,6 @@
+"""A module that handles passengers created by a registered user,
+retrieves the passenger from the database, gets them by ID,
+"""
 from flask import Blueprint, request, jsonify, render_template, flash
 from app.models import Passenger
 from app import db
@@ -47,7 +50,7 @@ def handle_passengers():
             flash('Passenger created successfully', 'success')
             # Return newly created passenger details with status code 201
             return jsonify({"Message": "Passenger created successfully"}), 201
-            # return jsonify(new_passenger.to_dict()), 201
+            return jsonify(new_passenger.to_dict()), 201
         except IntegrityError as e:
             db.session.rollback()  # Rollback the session in case of an error
             error_message = str(e.orig)  # Get the original error message from SQLAlchemy

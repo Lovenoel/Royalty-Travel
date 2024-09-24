@@ -47,10 +47,10 @@ def wait_for_dpkg_unlock(ssh, retries=5, delay=5):
 
 # List of servers with SSH key details
 servers = [
-    {"host": "54.227.128.57", "user": "ubuntu", "private_key": private_key},
+    {"host": "54.227.128.57", "user": "ubuntu", "private_key": private_key}, 
 ]
 
-project_dir = "/var/www/Royalty-Travel/backend"
+project_dir = "/var/www/Royalty-Travel"
 repo_url = "https://github.com/Lovenoel/Royalty-Travel.git"
 
 def connect_to_server(server):
@@ -102,13 +102,12 @@ def deploy_to_servers():
                     # Check if the project directory is empty
                     (f"if [ -z \"$(ls -A {project_dir})\" ]; then git clone {repo_url} {project_dir}; else echo 'Directory not empty, skipping clone'; fi", "Clone the project repository if directory is empty"),
 
-                    # Create a virtual environment and install dependencies
-                    (f"python3 -m venv {project_dir}/venv", "Create virtual environment"),
-                    (f"source {project_dir}/venv/bin/activate && pip install -r {project_dir}/requirements.txt", "Install project dependencies"),
+                    # Install dependencies
+                    (f"pip install -r {project_dir}/requirements.txt", "Install project dependencies"),
                     (f"echo 'SECRET_KEY={SECRET_KEY}\nSQLALCHEMY_DATABASE_URI={SQLALCHEMY_DATABASE_URI}' > {project_dir}/.env", "Create .env file"),
 
                     # Create Gunicorn systemd service file
-                    (f"echo '[Unit]\nDescription=Gunicorn instance to serve Royalty-Travel\nAfter=network.target\n\n[Service]\nUser=ubuntu\nGroup=ubuntu\nWorkingDirectory={project_dir}\nEnvironment=\"PATH={project_dir}/venv/bin\"\nExecStart={project_dir}/venv/bin/gunicorn --workers 3 --bind unix:{project_dir}/Royalty-Travel.sock -m 007 wsgi:app\n\n[Install]\nWantedBy=multi-user.target' | sudo tee /etc/systemd/system/Royalty-Travel.service", "Create Gunicorn systemd service file"),
+                    (f"echo '[Unit]\nDescription=Gunicorn instance to serve Royalty-Travel\nAfter=network.target\n\n[Service]\nUser=ubuntu\nGroup=ubuntu\nWorkingDirectory={project_dir}\nExecStart=/usr/local/bin/gunicorn --workers 3 --bind unix:{project_dir}/Royalty-Travel.sock -m 007 wsgi:app\n\n[Install]\nWantedBy=multi-user.target' | sudo tee /etc/systemd/system/Royalty-Travel.service", "Create Gunicorn systemd service file"),
                     ("sudo systemctl daemon-reload", "Reload systemd to recognize new service file"),
 
                     # Start and enable Gunicorn service
@@ -116,7 +115,7 @@ def deploy_to_servers():
                     ("sudo systemctl enable Royalty-Travel", "Enable Gunicorn service"),
 
                     # Create Nginx configuration file
-                    (f"echo 'server {{\n    listen 80;\n    server_name 100.25.16.64;\n\n    location / {{\n        include proxy_params;\n        proxy_pass http://unix:{project_dir}/Royalty-Travel.sock;\n    }}\n\n    location /static/ {{\n        alias {project_dir}/app/static/;\n    }}\n}}' | sudo tee /etc/nginx/sites-available/Royalty-Travel", "Create Nginx configuration file"),
+                    (f"echo 'server {{\n    listen 80;\n    server_name 54.227.128.57;\n\n    location / {{\n        include proxy_params;\n        proxy_pass http://unix:{project_dir}/Royalty-Travel.sock;\n    }}\n\n    location /static/ {{\n        alias {project_dir}/app/static/;\n    }}\n}}' | sudo tee /etc/nginx/sites-available/Royalty-Travel", "Create Nginx configuration file"),
 
                     # Remove existing symbolic link (if it exists)
                     ("sudo rm -f /etc/nginx/sites-enabled/Royalty-Travel", "Remove existing Nginx site symbolic link"),
@@ -135,7 +134,7 @@ def deploy_to_servers():
                     (f"sudo certbot --nginx -d kinglovenoel.tech --non-interactive --agree-tos -m kinglovenoel@gmail.com", "Obtain SSL certificate"),
 
                     # Run database migrations
-                    (f"{project_dir}/venv/bin/flask db upgrade", "Run database migrations"),
+                    ("flask db upgrade", "Run database migrations"),
                 ]
 
                 for command, description in commands:
