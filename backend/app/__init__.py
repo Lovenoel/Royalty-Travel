@@ -43,7 +43,7 @@ def create_app():
     app.config.from_object('config.Config')
 
     # The UPLOAD_FOLDER configuration
-    app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'app/static/uploads')
+    app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads')
 
 
     # Load configuration

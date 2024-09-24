@@ -21,21 +21,6 @@
     <button type="submit">Update Profile</button>
 </form>
 
-<h2>Change Password</h2>
-<form id="password-form" method="POST" action="{{ url_for('profile.change_password') }}" autocomplete="off">
-    {{ form.hidden_tag() }}
-    <label for="current_password">Current Password:</label>
-    <input type="password" id="current_password" name="current_password" autocomplete="off" required>
-
-    <label for="new_password">New Password:</label>
-    <input type="password" id="new_password" name="new_password" autocomplete="off" required>
-
-    <label for="confirm_password">Confirm New Password:</label>
-    <input type="password" id="confirm_password" name="confirm_password" autocomplete="off" required>
-
-    <button type="submit">Change Password</button>
-</form>
-
 <!-- JavaScript to handle the forms via AJAX -->
 <script>
     function getCSRFToken() {
@@ -47,24 +32,6 @@
         const formData = new FormData(this);
 
         fetch('{{ url_for("profile.profile") }}', {
-            method: 'POST',
-            body: formData,
-        }).then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message); // Show success message
-            } else {
-                alert(data.message); // Show error message
-            }
-        }).catch(error => console.error('Error:', error));
-    });
-
-    document.getElementById('password-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        const formData = new FormData(this);
-
-        fetch('{{ url_for("profile.change_password") }}', {
             method: 'POST',
             body: formData,
         }).then(response => response.json())

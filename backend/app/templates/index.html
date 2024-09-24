@@ -12,11 +12,11 @@
         </h1>
     </div>
     <div class="content">
-        {% for post in posts %}
+        {% for post in post %}
             <div class="post">
-                <h2>{{ posts.author }}</h2>
-                <p>Title: {{ posts.title }}</p>
-                <p>Content: {{ posts.content }}</p>
+                <h2>{{ post.author }}</h2>
+                <p>Title: {{ post.title }}</p>
+                <p>Content: {{ post.content }}</p>
             </div>
         {% endfor %}
     </div>

@@ -62,7 +62,15 @@ def upload_profile_picture():
     # Check if the file is allowed and save it
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)  # Secure the filename
-        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))  # Save the file to the upload folder
+        # file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))  # Save the file to the upload folder
+
+        # Ensure the upload directory exists
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        if not os.path.exists(upload_folder):
+            os.makedirs(upload_folder)  # Create the directory if it doesn't exist
+        
+        file_path = os.path.join(upload_folder, filename)
+        file.save(file_path)  # Save the file to the upload folder
 
         # Update the user's profilepictire path in the database
         current_user.profile_picture = filename
