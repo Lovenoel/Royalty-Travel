@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from app.models import UserBooking, PassengerBooking, Notification
+from ..models import UserBooking, PassengerBooking, Notification
 
 def check_and_send_notifications():
     """
