@@ -1,4 +1,9 @@
-from . import db, bcrypt
+from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+
+# Initialize extensions
+db = SQLAlchemy()
+bcrypt = Bcrypt()
 
 # Import models from models
 from .Passenger import Passenger

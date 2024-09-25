@@ -1,7 +1,6 @@
-from . import db
 from sqlalchemy.sql import func
 
-
+from . import db
 class BaseBooking(db.Model):
     """Base class for common booking attributes."""
     __abstract__ = True
