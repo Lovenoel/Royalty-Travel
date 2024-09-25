@@ -43,7 +43,7 @@ def create_app():
     login_manager.login_message_category = 'info'
     
     # Register blueprints
-    from .routes.home import main_bp  as main_bp
+    # from .routes.home import main_bp  as main_bp
     from .routes.Booking import bp as booking_bp
     from .routes.Bus_status import bp as bus_status
     from .routes.Notification import notification_bp as notification_bp
@@ -58,7 +58,7 @@ def create_app():
     from .routes.payment import payment_bp as payment_bp
     from .routes.posts import post_bp as post_bp
 
-    app.register_blueprint(main_bp, url_prefix='/main')
+    # app.register_blueprint(main_bp, url_prefix='/main')
     app.register_blueprint(booking_bp, url_prefix='/booking')
     app.register_blueprint(bus_status, url_prefix='/bus_status')
     app.register_blueprint(notification_bp, url_prefix='/notification')
