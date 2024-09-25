@@ -3,7 +3,7 @@ import requests
 
 traffic_bp = Blueprint('traffic', __name__, url_prefix='/traffic')
 
-@traffic_bp.route('/traffic', methods=['GET'])
+@traffic_bp.route('/traffic', methods=['GET'], strict_slashes=False)
 def get_traffic():
     # Retrieve origin and destination parameters from the request query string
     origin = request.args.get('origin')

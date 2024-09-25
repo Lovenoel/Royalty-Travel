@@ -3,7 +3,7 @@ from flask import Blueprint, request, redirect, render_template
 
 payment_bp = Blueprint('payment', __name__, url_prefix='/payment')
 
-@payment_bp.route('/payment', methods=['GET', 'POST'])
+@payment_bp.route('/payment', methods=['GET', 'POST'], strict_slashes=False)
 def payment():
     if request.method == 'POST':
         # Extract payment details from the form submission
@@ -13,6 +13,6 @@ def payment():
 
 
         
-@payment_bp.route('/success')
+@payment_bp.route('/success', strict_slashes=False)
 def success_page():
     return render_template('success.html')

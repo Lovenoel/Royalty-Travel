@@ -12,7 +12,7 @@ from flask_login import current_user
 bp = Blueprint('booking', __name__, url_prefix='/booking')
 
 
-@bp.route('/book', methods=['GET', 'POST'])
+@bp.route('/book', methods=['GET', 'POST'], strict_slashes=False)
 def book():
     """Handles the booking process"""
     form = BookingForm()
@@ -46,7 +46,7 @@ def book():
     return render_template('book.html',
                            form=form)
 
-@bp.route('/user_booking_details/<int:booking_id>', methods=['GET', 'POST'])
+@bp.route('/user_booking_details/<int:booking_id>', methods=['GET', 'POST'], strict_slashes=False)
 def user_booking_details(booking_id):
     """Fetch user booking details from the database"""
     booking = UserBooking.query.get_or_404(booking_id)
@@ -62,7 +62,7 @@ def user_booking_details(booking_id):
         return render_template('user_booking_details.html',
                                booking=booking, form=form)
     
-@bp.route('/passenger_booking_details/<int:booking_id>', methods=['GET', 'POST'])
+@bp.route('/passenger_booking_details/<int:booking_id>', methods=['GET', 'POST'], strict_slashes=False)
 def passenger_booking_details(booking_id):
     """Fetch passenger booking details from the database"""
     booking = PassengerBooking.query.get_or_404(booking_id)
@@ -78,7 +78,7 @@ def passenger_booking_details(booking_id):
     return render_template('passenger_booking_details.html',
                            booking=booking, form=form)
 
-@bp.route('/promotions')
+@bp.route('/promotions', strict_slashes=False)
 def promotions():
     """Fetch promotions from the database"""
     promotions = Promotion.query.all()  # Retrieve all promotions from the database

@@ -5,7 +5,7 @@ from ..models import User
 users_bp = Blueprint('users', __name__, url_prefix='/user')
 
 # The get_user route 
-@users_bp.route('/users', methods=['GET'])
+@users_bp.route('/users', methods=['GET'], strict_slashes=False)
 @login_required
 def get_users():
     # Queries the database to get the current users

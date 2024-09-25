@@ -8,7 +8,7 @@ from ..models.Booking import UserBooking, PassengerBooking
 
 booking_details_bp = Blueprint('booking_details', __name__, url_prefix='/booking_details')
 
-@booking_details_bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'])
+@booking_details_bp.route('/booking/<int:booking_id>', methods=['GET', 'POST'], strict_slashes=False)
 def booking_details(booking_id):
     """Attempts to fetch a UserBooking first"""
     booking = UserBooking.query.get(booking_id)

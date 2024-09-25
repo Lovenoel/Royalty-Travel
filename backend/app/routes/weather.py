@@ -3,7 +3,7 @@ import requests
 
 weather_bp = Blueprint('weather', __name__)
 
-@weather_bp.route('/weather', methods=['GET'])
+@weather_bp.route('/weather', methods=['GET'], strict_slashes=False)
 def get_weather():
     """
     Endpoint to fetch weather data for a specified city using OpenWeatherMap API.

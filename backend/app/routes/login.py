@@ -14,7 +14,7 @@ authorize_bp = Blueprint('authorize', __name__, url_prefix='/authorize')
 
 
 # Registration route
-@authorize_bp.route('/register', methods=['GET', 'POST'])
+@authorize_bp.route('/register', methods=['GET', 'POST'], strict_slashes=False)
 def register():
     """
     Endpoint for registering a new user to the database
@@ -43,7 +43,7 @@ def register():
 
 
 # Login route
-@authorize_bp.route('/login', methods=['GET', 'POST'])
+@authorize_bp.route('/login', methods=['GET', 'POST'], strict_slashes=False)
 def login():
     """
     Endpoint for login used by a registered user
@@ -82,7 +82,7 @@ def login():
                            )
 
 
-@authorize_bp.route('/logout')
+@authorize_bp.route('/logout', strict_slashes=False)
 @login_required
 def logout():
     """ Logs the current user out"""
@@ -90,7 +90,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-@authorize_bp.route('/account', methods=['GET', 'POST'])
+@authorize_bp.route('/account', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def account():
     """
@@ -120,7 +120,7 @@ def account():
                            image_file=image_file)
 
 
-@authorize_bp.route("/reset_request", methods=['GET', 'POST'])
+@authorize_bp.route("/reset_request", methods=['GET', 'POST'], strict_slashes=False)
 def reset_request():
     """
     Endpoint for requesting password 
@@ -135,7 +135,7 @@ def reset_request():
     return render_template('reset_request.html', form=form)
 
 
-@authorize_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
+@authorize_bp.route('/reset_password/<token>', methods=['GET', 'POST'], strict_slashes=False)
 def reset_token(token):
     """
     Endpoint for retrieving a  password reset token

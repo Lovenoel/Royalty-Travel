@@ -14,7 +14,7 @@ db = {
 receipt_service = ReceiptService(db)
 
 # Route to fetch all receipts via GET request
-@receipts_bp.route('/receipts', methods=['GET'])
+@receipts_bp.route('/receipts', methods=['GET'], strict_slashes=False)
 def get_receipts():
     """
     GET method to fetch all receipts.
@@ -26,7 +26,7 @@ def get_receipts():
     return jsonify(receipts), 200  # Return JSON response with receipts data and HTTP status 200
 
 # Route to create a new receipt via POST request
-@receipts_bp.route('/receipts', methods=['POST'])
+@receipts_bp.route('/receipts', methods=['POST'], strict_slashes=False)
 def create_receipt():
     """
     POST method to create a new receipt.
@@ -50,7 +50,7 @@ def create_receipt():
     return jsonify(new_receipt), 201  # Return JSON response with new receipt data and HTTP status 201
 
 # Route to fetch a specific receipt by its ID via GET request
-@receipts_bp.route('/receipts/<int:receipt_id>', methods=['GET'])
+@receipts_bp.route('/receipts/<int:receipt_id>', methods=['GET'], strict_slashes=False)
 def get_receipt_by_id(receipt_id):
     """
     GET method to fetch a specific receipt by its ID.

@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 # Create a Blueprint for passenger-related routes under '/passenger'
 bp = Blueprint('passengers', __name__, url_prefix='/passenger')
 
-@bp.route('/passengers', methods=['GET', 'POST'])
+@bp.route('/passengers', methods=['GET', 'POST'], strict_slashes=False)
 def handle_passengers():
     """
     Endpoint for handling multiple passengers.
@@ -64,7 +64,7 @@ def handle_passengers():
                 return jsonify({'error': 'Database integrity error.'}), 400
         except KeyError as e:
             return jsonify({'error': f'Missing required field: {str(e)}'}), 400
-@bp.route('/passenger/<int:id>', methods=['GET'])
+@bp.route('/passenger/<int:id>', methods=['GET'], strict_slashes=False)
 def get_passenger(id):
     """
     Endpoint for retrieving a specific passenger by ID.
@@ -83,7 +83,7 @@ def get_passenger(id):
         'phone': passenger.phone
     })
 
-@bp.route('/passenger/<int:id>/details', methods=['GET'])
+@bp.route('/passenger/<int:id>/details', methods=['GET'], strict_slashes=False)
 def show_passenger_details(id):
     """
     Endpoint for rendering the passenger details HTML template.
@@ -98,7 +98,7 @@ def show_passenger_details(id):
     return render_template('passenger.html', passenger=passenger)
 
 
-@bp.route('/add', methods=['GET'])
+@bp.route('/add', methods=['GET'], strict_slashes=False)
 def add_passenger_page():
     """Endpoint for adding a passenger"""
     return render_template('add_passenger.html')

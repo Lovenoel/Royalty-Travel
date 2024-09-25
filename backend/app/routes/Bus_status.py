@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 # Create a Blueprint for bus-related routes under '/bus_status'
 bp = Blueprint('bus_status', __name__, url_prefix='/bus_status')
 
-@bp.route('/enter_bus/<int:bus_id>', methods=['POST'])
+@bp.route('/enter_bus/<int:bus_id>', methods=['POST'], strict_slashes=False)
 def enter_bus(bus_id):
     """
     Endpoint for a passenger entering a bus.
@@ -34,7 +34,7 @@ def enter_bus(bus_id):
         return jsonify({"message": "Bus is full"}), 400
     return jsonify({"message": "Bus not found"}), 404  # Return error message if bus not found
 
-@bp.route('/buses_in_area', methods=['GET'])
+@bp.route('/buses_in_area', methods=['GET'], strict_slashes=False)
 def buses_in_area():
     """
     Endpoint for retrieving buses in a specific area.
@@ -51,7 +51,7 @@ def buses_in_area():
         # List of buses in the area with their IDs and number plates
     }), 200
 
-@bp.route('/bus-status', methods=['GET'])
+@bp.route('/bus-status', methods=['GET'], strict_slashes=False)
 def get_bus_status():
     """
     Endpoint for retrieving status of all buses.
@@ -65,7 +65,7 @@ def get_bus_status():
     # Convert bus status objects to dictionaries and return as JSON
     return jsonify([bus.to_dict() for bus in buses])
 
-@bp.route('/add_bus', methods=['GET', 'POST'])
+@bp.route('/add_bus', methods=['GET', 'POST'], strict_slashes=False)
 def add_bus():
     """
     Endpoint for adding a new bus

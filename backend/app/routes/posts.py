@@ -6,7 +6,7 @@ from ..models.Post import Post
 
 post_bp = Blueprint('post', __name__, url_prefix='/post')
 
-@post_bp.route('/new', methods=['GET', 'POST'])
+@post_bp.route('/new', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def new_post():
     form = PostForm()

@@ -8,7 +8,7 @@ from ..forms.forms import RegistrationForm
 profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
 
 
-@profile_bp.route('/profile', methods=['GET', 'POST'])
+@profile_bp.route('/profile', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def profile():
     # Updates the current_user details
@@ -23,7 +23,7 @@ def profile():
     return render_template('profile.html', user=current_user, form=form)
 
 # Change password route
-@profile_bp.route('/change_password', methods=['GET','POST'])
+@profile_bp.route('/change_password', methods=['GET','POST'], strict_slashes=False)
 @login_required
 def change_password():
     # Changes the password of the user
@@ -46,7 +46,7 @@ def change_password():
     return redirect(url_for('authorize.login'))
 
 # Route to handle profile picture upload
-@profile_bp.route('/upload_picture', methods=['POST'])
+@profile_bp.route('/upload_picture', methods=['POST'], strict_slashes=False)
 @login_required
 def upload_profile_picture():
     # Check if the request contains a file part

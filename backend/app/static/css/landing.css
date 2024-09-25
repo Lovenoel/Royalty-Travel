@@ -42,3 +42,17 @@ section.features, section.testimonials {
 .feature, .testimonial {
     margin: 20px 0;
 }
+
+/* latest changes */
+@media only screen and (max-width: 600px) {
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    .features {
+        flex-direction: column;
+    }
+    .feature img {
+        width: 100%;
+    }
+}
+

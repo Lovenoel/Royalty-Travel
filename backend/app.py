@@ -70,77 +70,78 @@ def teardown_request(exception):
         g.db.close()
 
 # Generates the csrf token
-@app.route('/api/csrf-token', methods=['GET'])
+@app.route('/api/csrf-token', methods=['GET'], strict_slashes=False)
 def get_csrf_token():
     token = generate_csrf()
     return jsonify({'csrf_token': token})
 
 
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def landing():
     return render_template('landing.html')
 
 # The index or home route of the app
 #@app.route('/')
-@app.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET'], strict_slashes=False)
 def index():
     form = PassengerForm()
     post = Post.query.all()
     is_admin = json.dumps(current_user.is_admin) if current_user.is_authenticated else 'false'
     return render_template('index.html', posts=post, form=form, is_admin=is_admin)
-@app.route('/new', methods=['GET', 'POST'])
+
+@app.route('/new', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def new_post():
     form = PostForm
     posts = Post.query.all()
     return render_template('index.html', posts=posts, form=form)
 
-@app.route('/react')
+@app.route('/react', strict_slashes=False)
 def react_index():
     return render_template('react_index.html')
 
 
-@app.route('/account')
+@app.route('/account', strict_slashes=False)
 @login_required
 def account():
     form = PassengerForm()
     return render_template('account.html', title='Account', form=form)
 
 # The routes indexing booking
-@app.route('/booking', methods=['GET', 'POST'])
+@app.route('/booking', methods=['GET', 'POST'], strict_slashes=False)
 def booking():
     form = BookingForm()
     return render_template('book.html', form=form)
 
-@app.route('/booking/user_booking_details/<int:booking_id>')
+@app.route('/booking/user_booking_details/<int:booking_id>', strict_slashes=False)
 def user_booking_details(booking_id):
     # Here you would fetch the booking details from the database
     # For simplicity, let's just pass the booking_id to the template
     return render_template('user_booking_details.html', booking_id=booking_id)
 
-@app.route('/booking/passenger_booking_details/<int:booking_id>')
+@app.route('/booking/passenger_booking_details/<int:booking_id>', strict_slashes=False)
 def passenger_booking_details(booking_id):
     # Here you would fetch the booking details from the database
     # For simplicity, let's just pass the booking_id to the template
     return render_template('passenger_booking_details.html', booking_id=booking_id)
 
 
-@app.route('/promotions')
+@app.route('/promotions', strict_slashes=False)
 def promotions():
     return render_template('promotions.html', promotions=promotions)
 
 
 # the route that calls bus_status
-@app.route('/bus_status', methods=['GET', 'POST'])
+@app.route('/bus_status', methods=['GET', 'POST'], strict_slashes=False)
 def bus_status():
     return render_template('bus_status.html')
 
-@app.route('/add_bus', methods=['GET', 'POST'])
+@app.route('/add_bus', methods=['GET', 'POST'], strict_slashes=False)
 def add_bus():
     form = BusStatusForm()
     return render_template('addBus.html', form=form)
 
-@app.route('/bus_status/success')
+@app.route('/bus_status/success', strict_slashes=False)
 def success():
     """
     Route to display a success message or details of the added bus.
@@ -149,38 +150,38 @@ def success():
     return render_template('success.html')
 
 # the route that calls the notification
-@app.route('/notification', methods=['GET', 'POST'])
+@app.route('/notification', methods=['GET', 'POST'], strict_slashes=False)
 def notification():
     return render_template('notification.html')
 
 # the route that calls the recipts
-@app.route('/receipt')
+@app.route('/receipt', strict_slashes=False)
 def receipt():
     return render_template('receipt.html')
 
 # Route for the profile
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile', methods=['GET', 'POST'], strict_slashes=False)
 def profile():
     form = RegistrationForm()
     return render_template('profile.html', user=current_user, form=form)
 
 # Registration route
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'], strict_slashes=False)
 def register():
     form = RegistrationForm()
     return render_template('register.html', user=current_user, form=form)
 
 # Login route
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'], strict_slashes=False)
 def login():
     form = LoginForm()
     return render_template('login.html', User=current_user, form=form)
 
 # Password change route
-@app.route('/change_password')
+@app.route('/change_password', strict_slashes=False)
 def change_password():
     return render_template('profile.html')
 
-@app.route('/user/users')
+@app.route('/user/users', strict_slashes=False)
 def get_users():
     return render_template('get_users.html')

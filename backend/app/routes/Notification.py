@@ -4,7 +4,7 @@ from ..models.Notification import Notification
 notification_bp = Blueprint('notifications', __name__, url_prefix='/notification')
 
 # The notifications route
-@notification_bp.route('/notifications')
+@notification_bp.route('/notifications', strict_slashes=False)
 def notifications():
     # Function that queries the database for notifications
     # according to the order of time
