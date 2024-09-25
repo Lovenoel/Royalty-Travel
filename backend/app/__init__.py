@@ -91,7 +91,7 @@ def create_app():
     app.register_blueprint(post_bp, url_prefix='/post')
     return app
 
-from .models.User import User
+from .models import User
 
 # Define the user loader function for Flask-Login
 @login_manager.user_loader
