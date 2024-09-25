@@ -43,20 +43,20 @@ def create_app():
     login_manager.login_message_category = 'info'
     
     # Register blueprints
-    from app.routes.home import main_bp  as main_bp
-    from app.routes.Booking import bp as booking_bp
-    from app.routes.Bus_status import bp as bus_status
-    from app.routes.Notification import notification_bp as notification_bp
-    from app.routes.Passenger import bp as passenger_bp
-    from app.routes.Receipts import receipts_bp as receipt_bp
-    from app.routes.traffic import traffic_bp as traffic_bp
-    from app.routes.weather import weather_bp as weather_bp
-    from app.routes.login import authorize_bp as authorize_bp
-    from app.routes.profile import profile_bp as profile_bp
-    from app.routes.booking_details import booking_details_bp as booking_details_bp
-    from app.routes.Users import users_bp as user_bp
-    from app.routes.payment import payment_bp as payment_bp
-    from app.routes.posts import post_bp as post_bp
+    from .routes.home import main_bp  as main_bp
+    from .routes.Booking import bp as booking_bp
+    from .routes.Bus_status import bp as bus_status
+    from .routes.Notification import notification_bp as notification_bp
+    from .routes.Passenger import bp as passenger_bp
+    from .routes.Receipts import receipts_bp as receipt_bp
+    from .routes.traffic import traffic_bp as traffic_bp
+    from .routes.weather import weather_bp as weather_bp
+    from .routes.login import authorize_bp as authorize_bp
+    from .routes.profile import profile_bp as profile_bp
+    from .routes.booking_details import booking_details_bp as booking_details_bp
+    from .routes.Users import users_bp as user_bp
+    from .routes.payment import payment_bp as payment_bp
+    from .routes.posts import post_bp as post_bp
 
     app.register_blueprint(main_bp, url_prefix='/main')
     app.register_blueprint(booking_bp, url_prefix='/booking')
