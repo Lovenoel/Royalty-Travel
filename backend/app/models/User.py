@@ -1,10 +1,10 @@
-from app import db, bcrypt
+from . import db, bcrypt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask import current_app
 #from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired, BadSignature
 import jwt
-from datetime import datetime, timedelta
+from datetime import timedelta
 from sqlalchemy.sql import func
 
 

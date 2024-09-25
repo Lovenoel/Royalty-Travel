@@ -1,4 +1,4 @@
-from app import db
+from . import db
 
 class Bus(db.Model):
     """Represents a bus in the system."""

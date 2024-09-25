@@ -1,6 +1,4 @@
-
-
-from app import db
+from . import db
 
 class Promotion(db.Model):
     """A class model for Promotions """
