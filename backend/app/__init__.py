@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 from flask_login import LoginManager
@@ -16,34 +16,21 @@ migrate = Migrate()
 login_manager = LoginManager()
 csrf = CSRFProtect()
 mail = Mail()
+cors = CORS()
 
 
 def create_app():
     # Create a Flask instance
     app = Flask(__name__, static_folder='static')
     csrf.init_app(app)
-    CORS(app)  # This will enable CORS for all routes
-    Mail(app)
-
-    # Load environment variables from .env file
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    load_dotenv(os.path.join(basedir, '..', '.env'))
-
-    # Set configuration from environment variables
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-    
-
-    # Load configuration from Config class
-    app.config.from_object('config.Config')
+    cors.init_app(app)  # This will enable CORS for all routes
+    mail.init_app(app)
 
     # The UPLOAD_FOLDER configuration
     app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads')
 
-
     # Load configuration
-    from config import Config
+    from backend.config import Config
     app.config.from_object(Config)
     
     # Initialize extensions
