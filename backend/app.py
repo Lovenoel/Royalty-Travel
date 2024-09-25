@@ -13,7 +13,7 @@ from app.models.Post import Post
 from flask_wtf.csrf import generate_csrf
 import json
 
-
+# Flask application instance
 app = create_app()
 
 """posts = [
@@ -184,8 +184,3 @@ def change_password():
 @app.route('/user/users')
 def get_users():
     return render_template('get_users.html')
-
-if __name__ == '__main__':
-    # Starts the app when run directly and not import
-    print("Starting the Flask development server on http://127.0.0.1:5000/")
-    app.run(debug=True)
