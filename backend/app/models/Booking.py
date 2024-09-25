@@ -1,7 +1,6 @@
 from . import db
 from sqlalchemy.sql import func
-from app.models.Passenger import Passenger
-from app.models.User import User
+
 
 class BaseBooking(db.Model):
     """Base class for common booking attributes."""

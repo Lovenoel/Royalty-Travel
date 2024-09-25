@@ -101,5 +101,4 @@ def load_user(user_id):
 
 if __name__ == '__main__':
     app = create_app()
-    print("Starting the Flask development server on http://127.0.0.1:5000/")
     app.run(debug=True)
