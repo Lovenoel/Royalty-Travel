@@ -1,5 +1,5 @@
 from flask_mail import Message
-from app import mail
+from . import mail
 from flask import url_for, current_app
 
 
