@@ -4,11 +4,11 @@ a registered user, user account details and password resetting."""
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
 from flask_login import current_user, login_user, logout_user, login_required, logout_user
 from . import db, bcrypt, mail
-from app.forms.forms import RegistrationForm, LoginForm
-from app.forms.forms import UpdateAccountForm, ResetPasswordForm, RequestResetForm
-from app.models import User
+from ..forms.forms import RegistrationForm, LoginForm
+from ..forms.forms import UpdateAccountForm, ResetPasswordForm, RequestResetForm
+from ..models import User
 from flask_mail import Message
-from app.email_utils import send_reset_email
+from ..email_utils import send_reset_email
 
 authorize_bp = Blueprint('authorize', __name__, url_prefix='/authorize')
 
