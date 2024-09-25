@@ -1,7 +1,7 @@
 """A module that handles all the bus statuses"""
 from flask import Blueprint, request, jsonify, flash, url_for, redirect, render_template
 from app.models import Bus, BusStatus, db
-from app.forms.BusStatusForm import BusStatusForm
+from ..forms.BusStatusForm import BusStatusForm
 from datetime import datetime, timezone
 
 # Create a Blueprint for bus-related routes under '/bus_status'

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
-from app.forms.passengerForm import PassengerForm
+from ..forms.passengerForm import PassengerForm
 
 main_bp = Blueprint('main', __name__, url_prefix='/main')
 
