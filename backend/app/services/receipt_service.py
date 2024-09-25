@@ -4,6 +4,7 @@ Receipt Service
 - Gets receipts from database with its unique ID
 """
 
+
 class ReceiptService:
     """Service class for handling receipts."""
 

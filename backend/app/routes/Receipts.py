@@ -1,6 +1,6 @@
-from app import db  # Import the db instance from the app
+from . import db  # Import the db instance from the app
 from flask import Blueprint, request, jsonify  # Import necessary Flask components
-from app.services.receipt_service import ReceiptService  # Import the ReceiptService from services
+from ..services.receipt_service import ReceiptService  # Import the ReceiptService from services
 
 # Create a Blueprint named 'receipts' with URL prefix '/receipt'
 receipts_bp = Blueprint('receipts', __name__, url_prefix='/receipt')

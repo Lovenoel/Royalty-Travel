@@ -2,8 +2,8 @@
 retrieves the passenger from the database, gets them by ID,
 """
 from flask import Blueprint, request, jsonify, render_template, flash
-from app.models import Passenger
-from app import db
+from ..models import Passenger
+from . import db
 from sqlalchemy.exc import IntegrityError
 
 # Create a Blueprint for passenger-related routes under '/passenger'

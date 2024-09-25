@@ -1,8 +1,8 @@
-from app import db
+from . import db
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import current_user, login_required
-from app.forms.posts import PostForm
-from app.models.Post import Post
+from ..forms.posts import PostForm
+from ..models.Post import Post
 
 post_bp = Blueprint('post', __name__, url_prefix='/post')
 

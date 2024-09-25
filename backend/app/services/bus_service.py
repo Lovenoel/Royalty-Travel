@@ -4,6 +4,7 @@ Bus Service
 - Gets their status
 """
 
+
 class BusService:
     """Represents Bus Service"""
     def __init__(self, db):

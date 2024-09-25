@@ -3,7 +3,7 @@ Handles the Booking Process
 - Creates new bookings
 - Gets a booking by it's booking_id
 '''
-from app.models import Booking
+from ..models import Booking
 
 
 class BookingService:

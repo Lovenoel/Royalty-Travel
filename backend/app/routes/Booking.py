@@ -2,11 +2,11 @@
 registered user and a guest passenger."""
 
 from flask import Blueprint, render_template, redirect, url_for, flash
-from app import db
-from app.forms.bookingForm import BookingForm
-from app.models.Booking import UserBooking, PassengerBooking
-from app.models.Passenger import Passenger
-from app.models.Promotions import Promotion
+from . import db
+from ..forms.bookingForm import BookingForm
+from ..models.Booking import UserBooking, PassengerBooking
+from ..models.Passenger import Passenger
+from ..models.Promotions import Promotion
 from flask_login import current_user
 
 bp = Blueprint('booking', __name__, url_prefix='/booking')

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from flask_login import current_user, login_required
-from app.models import User
+from ..models import User
 
 users_bp = Blueprint('users', __name__, url_prefix='/user')
 

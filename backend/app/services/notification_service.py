@@ -6,6 +6,7 @@ Handles;
 - Marks a notification once it's read
 """
 
+
 class NotificationService:
     """Intializes the database
     Args:

@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flask_login import current_user, login_required, fresh_login_required
 from werkzeug.utils import secure_filename
 import os
-from app import db, bcrypt
-from app.forms.forms import RegistrationForm
+from . import db, bcrypt
+from ..forms.forms import RegistrationForm
 
 profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
 

@@ -2,9 +2,9 @@
 for both a registered user and a guest passenger"""
 
 from flask import render_template, Blueprint, redirect, url_for, request, flash
-from app import db
-from app.forms.bookingForm import BookingForm
-from app.models.Booking import UserBooking, PassengerBooking
+from . import db
+from ..forms.bookingForm import BookingForm
+from ..models.Booking import UserBooking, PassengerBooking
 
 booking_details_bp = Blueprint('booking_details', __name__, url_prefix='/booking_details')
 

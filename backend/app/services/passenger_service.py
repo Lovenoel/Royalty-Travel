@@ -4,6 +4,7 @@
 - Gets a passenger by passenger_id
 """
 
+
 class PassengerService:
     """Represents Passenger Service class"""
 

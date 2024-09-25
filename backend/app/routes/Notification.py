@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template
-from app import db
-from app.models.Notification import Notification
+from ..models.Notification import Notification
 
 notification_bp = Blueprint('notifications', __name__, url_prefix='/notification')
 
