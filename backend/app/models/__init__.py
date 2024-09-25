@@ -1,5 +1,3 @@
-from app import db
-
 # Import models from models
 from .Passenger import Passenger
 from .Booking import UserBooking, PassengerBooking
