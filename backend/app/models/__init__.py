@@ -1,4 +1,4 @@
-from .. import db, bcrypt
+from . import db, bcrypt
 
 # Import models from models
 from .Passenger import Passenger

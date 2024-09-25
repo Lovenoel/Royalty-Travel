@@ -11,14 +11,7 @@ from flask_mail import Mail
 from dotenv import load_dotenv
 import os
 import json
-from .forms.forms import RegistrationForm, LoginForm
-from .utils.notifications import check_and_send_notifications
 from flask_apscheduler import APScheduler
-from .forms.bookingForm import BookingForm
-from .forms.passengerForm import PassengerForm
-from .forms.BusStatusForm import BusStatusForm
-from .forms.posts import PostForm
-from .models.Post import Post
 from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
 
@@ -97,6 +90,7 @@ scheduler.init_app(app)
 
 @scheduler.task('interval', id='check_notifications', seconds=3600)
 def scheduled_task():
+    from .utils.notifications import check_and_send_notifications
     with app.app_context():
         check_and_send_notifications()
 
@@ -133,7 +127,9 @@ def landing():
 # Home route
 @app.route('/home', methods=['GET'], strict_slashes=False)
 def index():
+    from .forms.passengerForm import PassengerForm
     form = PassengerForm()
+    from .models.Post import Post
     post = Post.query.all()
     is_admin = json.dumps(current_user.is_admin) if current_user.is_authenticated else 'false'
     return render_template('index.html', posts=post, form=form, is_admin=is_admin)
@@ -141,7 +137,9 @@ def index():
 @app.route('/new', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def new_post():
+    from .forms.posts import PostForm
     form = PostForm()
+    from .models.Post import Post
     posts = Post.query.all()
     return render_template('index.html', posts=posts, form=form)
 
@@ -152,12 +150,14 @@ def react_index():
 @app.route('/account', strict_slashes=False)
 @login_required
 def account():
+    from .forms.passengerForm import PassengerForm
     form = PassengerForm()
     return render_template('account.html', title='Account', form=form)
 
 # Booking routes
 @app.route('/booking', methods=['GET', 'POST'], strict_slashes=False)
 def booking():
+    from .forms.bookingForm import BookingForm
     form = BookingForm()
     return render_template('book.html', form=form)
 
@@ -191,6 +191,7 @@ def bus_status():
 
 @app.route('/add_bus', methods=['GET', 'POST'], strict_slashes=False)
 def add_bus():
+    from .forms.BusStatusForm import BusStatusForm
     form = BusStatusForm()
     return render_template('addBus.html', form=form)
 
@@ -211,18 +212,21 @@ def receipt():
 # Profile route
 @app.route('/profile', methods=['GET', 'POST'], strict_slashes=False)
 def profile():
+    from .forms.forms import RegistrationForm
     form = RegistrationForm()
     return render_template('profile.html', user=current_user, form=form)
 
 # Registration route
 @app.route('/register', methods=['GET', 'POST'], strict_slashes=False)
 def register():
+    from .forms.forms import RegistrationForm
     form = RegistrationForm()
     return render_template('register.html', user=current_user, form=form)
 
 # Login route
 @app.route('/login', methods=['GET', 'POST'], strict_slashes=False)
 def login():
+    from .forms.forms import LoginForm
     form = LoginForm()
     return render_template('login.html', User=current_user, form=form)
 
