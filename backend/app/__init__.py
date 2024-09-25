@@ -80,8 +80,3 @@ from .models import User
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Use PORT env variable if available, default to 5000
-    app = create_app()
-    app.run(host='0.0.0.0', port=port)
