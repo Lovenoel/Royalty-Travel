@@ -1,0 +1,5 @@
+[phases]
+  install = "pip install -r backend/requirements.txt"
+
+[commands]
+  start = "gunicorn backend.app:app"
