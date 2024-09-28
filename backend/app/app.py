@@ -38,7 +38,7 @@ def create_app():
     app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/uploads')
 
     # Load configuration
-    from backend.config import Config
+    from config import Config
     app.config.from_object(Config)
 
     # Initialize extensions
