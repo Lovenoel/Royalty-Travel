@@ -1,7 +1,7 @@
 """A module that handles registering a new user, login for
 a registered user, user account details and password resetting."""
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required, logout_user
 from . import db, bcrypt, mail
 from ..forms.forms import RegistrationForm, LoginForm

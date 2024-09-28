@@ -1,8 +1,9 @@
 .vscode
 deploy.py
-__pycache__
-.vscode
+__pycache__/
+.vscode/
 .env
 app.db
 create_db.py
+deploy.py
 deploy.py
