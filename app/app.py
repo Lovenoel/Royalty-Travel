@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from models import login_manager
+from models import login_manager, db
 from routes import bcrypt
 from flask_wtf.csrf import CSRFProtect
 
@@ -10,10 +10,10 @@ app = Flask(__name__)
 csrf.init_app(app)
 
 # Load configuration
-#from config import Config
-#app.config.from_object(Config)
+from config import Config
+app.config.from_object(Config)
 
-#db.init_app(app)
+db.init_app(app)
 login_manager.init_app(app)
 bcrypt.init_app(app)
 
