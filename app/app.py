@@ -11,8 +11,8 @@ from routes import bcrypt
 app = Flask(__name__)
 
 # Load configuration
-from config import Config
-app.config.from_object(Config)
+#from config import Config
+#app.config.from_object(Config)
 
 #db.init_app(app)
 login_manager.init_app(app)
