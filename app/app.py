@@ -1,14 +1,13 @@
 from flask import Flask, render_template
 from models import login_manager
 from routes import bcrypt
+from flask_wtf.csrf import CSRFProtect
 
 
-# Initialize the Flask application
-"""def create_app():
-    app = Flask(__name__)
-    return app
-"""
+csrf = CSRFProtect()
+
 app = Flask(__name__)
+csrf.init_app(app)
 
 # Load configuration
 #from config import Config
