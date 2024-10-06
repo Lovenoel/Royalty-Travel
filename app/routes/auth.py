@@ -23,7 +23,7 @@ def register():
                         phone=form.phone.data,
                         is_admin=form.is_admin.data)
             db.session.add(user)
-            db.commit()
+            db.session.commit()
             flash('Your account has been created', 'success')
             return redirect(url_for('auth.login'))
         else:
