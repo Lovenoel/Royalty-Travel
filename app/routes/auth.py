@@ -30,7 +30,7 @@ def register():
             flash('That email exists, choose another email', 'danger')
     return render_template('register.html', title='Register', form=form)
 
-@auth_bp.route('/login')
+@auth_bp.route('/login', methods=['GET', 'POST'], strict_slashes=False)
 def login():
     print('----------login hit-----------')
     if current_user.is_authenticated:
