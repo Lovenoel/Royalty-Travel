@@ -37,8 +37,8 @@ def login():
         print('User is authenticated')
         return redirect(url_for('home'))
     
-    form = LoginForm
-    #print(f"{form.email.data}---------------")
+    form = LoginForm()
+    print(f"{form.email.data}---------------")
 
     if form.validate_on_submit:
         user = User.query.filter_by(email=form.email.data).first()
