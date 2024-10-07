@@ -1,6 +1,6 @@
-from flask import Blueprint, url_for, redirect, flash, render_template
-from flask_login import current_user
-from forms.auth_forms import RegistrationForm
+from flask import Blueprint, url_for, redirect, flash, render_template, request
+from flask_login import current_user, login_user
+from forms.auth_forms import RegistrationForm, LoginForm
 from models.users import User
 from . import bcrypt
 from models import db
@@ -32,4 +32,34 @@ def register():
 
 @auth_bp.route('/login')
 def login():
-    return 'You are now logged in.'
+    print('----------login hit-----------')
+    if current_user.is_authenticated:
+        print('User is authenticated')
+        return redirect(url_for('home'))
+    
+    form = LoginForm
+    print(f"{form.email.data}---------------")
+
+    if form.validate_on_submit:
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            print(f"User found: {user}")
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
+                print('Password check passed')
+                login_user(user, remember=form.remember.data)
+                next_page = request.args.get('next')
+            print(f"Next page: {next_page}")  # Debug statement
+            return redirect(next_page) if next_page else redirect(url_for('home'))
+        else:
+            print("Login unsuccessful. Invalid email or password.")  # Debug statement
+            flash('Login Unsuccessful. Please check email and password', 'danger')
+    else:
+        print("Form validation failed.")  # Debug statement
+    
+    next_page = request.args.get('next')
+            
+    return render_template('login.html',
+                           title='Login',
+                           form=form,
+                           next_page=next_page
+                           )
