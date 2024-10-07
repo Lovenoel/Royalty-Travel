@@ -32,6 +32,7 @@ def register():
 
 @auth_bp.route('/login', methods=['GET', 'POST'], strict_slashes=False)
 def login():
+    """ Endpoint for registered user login """
     print('----------login hit-----------')
     if current_user.is_authenticated:
         print('User is authenticated')
