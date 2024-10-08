@@ -1,5 +1,5 @@
 from flask import Blueprint, url_for, redirect, flash, render_template, request
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user, login_required
 from forms.auth_forms import RegistrationForm, LoginForm
 from models.users import User
 from . import bcrypt
@@ -64,3 +64,10 @@ def login():
                            form=form,
                            next_page=next_page
                            )
+
+@auth_bp.route('/logout', strict_slashes=False)
+@login_required
+def logout():
+    """ Logs the current user out"""
+    logout_user()
+    return redirect(url_for('home'))
