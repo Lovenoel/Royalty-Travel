@@ -12,7 +12,7 @@ class Passenger(db.Model):
     phone = db.Column(db.String(16), unique=True, nullable=False)
 
     # Relationship with Booking
-    passenger_bookings = db.relationship('PassenegerBooking', backref='passenger', lazy=True)
+    passenger_bookings = db.relationship('PassengerBooking', backref='passenger', lazy=True)
 
     __table_args__ = {'extend_existing': True}
 

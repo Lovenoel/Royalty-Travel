@@ -17,10 +17,10 @@ def book():
         if current_user.is_authenticated:
             booking = UserBooking(
                 username = form.username.data,
-                uuser_id = current_user.id,
+                user_id = current_user.id,
                 departure_place = form.departure_place.data,
                 destination = form.departure.data,
-                departure_date_time = form.departure_date_time.data,
+                date_time = form.date_time.data,
                 is_guest = False
             )
 
@@ -29,7 +29,7 @@ def book():
             booking = PassengerBooking(
                 username = form.username.data,
                 passenger_id = Passenger.id,
-                departure_place = form.departure.data,
+                departure_place = form.departure_place.data,
                 destination = form.destination.data,
                 departure_date_time = form.departure_date_time.data,
                 is_guest = True
@@ -38,5 +38,5 @@ def book():
         db.session.add(booking)
         db.session.commit()
         flash('Your booking has been succeessfully made', 'success')
-        return redirect(url_for('booking.book'))
+        return redirect(url_for('payment.pay'))
     return render_template('book.html', form=form)
