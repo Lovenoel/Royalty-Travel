@@ -29,7 +29,7 @@ app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(booking_bp, url_prefix='/booking')
 app.register_blueprint(payment_bp, url_prefix='/payment')
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def landing():
     return render_template('landing.html')
 
