@@ -30,6 +30,10 @@ app.register_blueprint(booking_bp, url_prefix='/booking')
 app.register_blueprint(payment_bp, url_prefix='/payment')
 
 @app.route('/')
+def landing():
+    return render_template('landing.html')
+
+@app.route('/home')
 def home():
     return render_template('index.html')
 

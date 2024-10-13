@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Royalty Travel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Royalty Travel - Your journey begins here. Book now and explore the world with us!">
+    <meta name="keywords" content="travel, booking, journey, vacation, affordable travel, reliable travel">
+    <!-- Analytics Scripts -->
+    <!-- Replace with actual Google Analytics script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GOOGLE_ANALYTICS_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR_GOOGLE_ANALYTICS_ID');
+    </script>
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Royalty Travel</h1>
+            <p>Your journey begins here. Book now and explore the world with us!</p>
+            <a href="{{ url_for('auth.register') }}" class="cta-button" target="_blank">Get Started</a>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Screenshot for booking" class="image">
+            <h2>Bus Booking</h2>
+            <p>Easily book your bus tickets from any location to your desired destination.</p>
+        </div>
+        <div class="feature">
+            <!--img src="{{ url_for('static', filename='images/receipt_1.png') }}" alt="Screenshot for receipts" class="image"-->
+            <h2>Travel Receipt</h2>
+            <p>Be in positon to get your receipt right away with one click.</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/promotions.png') }}" alt="Promotion banner">
+            <h2>Promotions and Discounts</h2>
+            <p>Stay updated with our latest promotions and discounts to save on your travels.</p>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <h2>About Royalty Travel</h2>
+            <p>Inspired by the need to simplify bus booking and provide real-time updates, Royalty Travel aims to enhance the travel experience for passengers. This project is part of the Portfolio Project requirement at Holberton School.</p>
+            <div class="team-members">
+                <h3>Meet the Team</h3>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/ogwel-noel-927814270" target="_blank" rel="noopener noreferrer">Ogwel Noel - LinkedIn</a></li>
+                    <li><a href="https://github.com/lovenoel/" target="_blank" rel="noopener noreferrer">Ogwel Noel - GitHub</a></li>
+                    <li><a href="https://twitter.com/noelogwel01/" target="_blank" rel="noopener noreferrer">Ogwel Noel - Twitter</a></li>
+                </ul>
+            </div>
+            <div class="github-repo">
+                <a href="https://github.com/lovenoel/royalty-travel" target="_blank">View Royalty Travel GitHub Repository</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Royalty Travel. All rights reserved.</p>
+    </footer>
+</body>
+</html>
