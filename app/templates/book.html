@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+<div>
+    <h1>Book a Bus</h1>
+    <form>
+        {{ form.hidden_tag() }}
+        {% if not current_user.is_authenticated %}
+            <div class="input-group">
+                {{ form.passenger_name.label }} {{ form.passenger_name(class="form-control", autocomplete="off") }}
+            </div>
+        {% else %}
+            <div class="input-group">
+                {{ form.username.label }} {{ form.username(class="form-control", autocomplete="off") }}
+            </div>
+        {% endif %}
+        <div class="input-group">
+            {{ form.departure_place.label }} {{ form.departure_place(class="form-control", autocomplete="off") }}
+        </div>
+        <div class="input-group">
+            {{ form.destination.label }} {{ form.destination(class="form-control", autocomplete="off") }}
+        </div>
+        <div class="input-group">
+            {{ form.date_time.label }} {{ form.date_time(class="form-control", type="datetime-local", autocomplete="off") }}
+        </div>
+        <button class="book-now-btn" type="submit">{{ form.submit() }}</button>
+    </form>
+</div>
+{% endblock content %}

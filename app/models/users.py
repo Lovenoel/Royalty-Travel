@@ -13,6 +13,8 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(16), nullable=False, unique=True)
     is_admin = db.Column(db.Boolean, default=False)
 
+    user_bookings = db.relationship('UserBooking', backref='user', lazy=True)
+
     def __repr__(self):
         """Returns a user object."""
         return f'<User {User.username}, {User.email}>'

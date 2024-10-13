@@ -21,9 +21,11 @@ bcrypt.init_app(app)
 
 # Import blueprints
 from routes.auth import auth_bp as auth_bp
+from routes.booking import booking_bp as booking_bp
 
 # Register the blueprints
 app.register_blueprint(auth_bp, url_prefix='/auth')
+app.register_blueprint(booking_bp, url_prefix='/booking')
 
 @app.route('/')
 def home():
