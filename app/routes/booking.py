@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from models import db
-from models.booking import UserBooking, PassergerBooking
+from models.booking import UserBooking, PassengerBooking
 from forms.bookingForm import BookingForm
 from models.passenger import Passenger
 from flask_login import current_user
@@ -26,7 +26,7 @@ def book():
 
             # Handles the passenger(Not registered user)
         else:
-            booking = PassergerBooking(
+            booking = PassengerBooking(
                 username = form.username.data,
                 passenger_id = Passenger.id,
                 departure_place = form.departure.data,
