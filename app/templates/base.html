@@ -13,6 +13,7 @@
       type="image/png"
       href="{{ url_for('static', filename='images/Royalty-Travel.png')}}"
     />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav_links.css')}}"/>
     {% block head %}{% endblock %}
   </head>
   <body>
@@ -24,8 +25,10 @@
         <ul>
           <li><a href="{{ url_for('home')}}">Home</a></li>
           <li><a href="{{ url_for('booking') }}">Bookings</a></li>
+          <li><a href="{{ url_for('passenger.handle_passengers')}}">Passenger</a></li>
           {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('user.dashboard') }}">Dashboard</a><li>
           {% else %}
             <li><a href="{{ url_for('auth.register') }}">Sign up</a></li>
             <li><a href="{{ url_for('auth.login') }}">Login</a></li>

@@ -3,9 +3,9 @@
 {% block content %}
 <div class="container">
         <h2>Login</h2>
-        <form  action="{{ url_for('auth.login') }}" autocomplete="off" method="POST">
+        <form  action="{{ url_for('auth.login', next=next_page) }}" autocomplete="off" method="POST">
             {{ form.hidden_tag() }}
-            <!--  -->
+            <input type="hidden" name="next" value="{{ next_page }}">
             <label for="email">Email:</label>
             {{ form.email(size=32, autocomplete="off") }}
             <label for="password">Password:</label>

@@ -3,3 +3,5 @@ from flask_login import LoginManager
 
 login_manager = LoginManager()
 db = SQLAlchemy()
+
+__all__ = ['db', 'bcrypt']

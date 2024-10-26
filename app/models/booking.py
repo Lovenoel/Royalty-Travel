@@ -40,9 +40,9 @@ class UserBooking(BaseBooking):
 
 class PassengerBooking(BaseBooking):
     """Represents a booking made by a guest user"""
-    __tablename__ = 'passenger_booking'  # Fixed typo here
+    __tablename__ = 'passenger_booking'
 
-    passenger_id = db.Column(db.Integer, db.ForeignKey('passenger.id'), nullable=False)  # Fixed ForeignKey case
+    passenger_id = db.Column(db.Integer, db.ForeignKey('passenger.id'), nullable=False)
 
     def to_dict(self):
         """Converts the passenger object to a dictionary"""

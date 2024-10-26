@@ -14,7 +14,7 @@ class Passenger(db.Model):
     # Relationship with Booking
     passenger_bookings = db.relationship('PassengerBooking', backref='passenger', lazy=True)
 
-    __table_args__ = {'extend_existing': True}
+    # __table_args__ = {'extend_existing': True}
 
     def to_dict(self):
         """

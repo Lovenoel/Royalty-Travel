@@ -5,11 +5,12 @@ from forms.bookingForm import BookingForm
 from models.passenger import Passenger
 from flask_login import current_user
 from models.users import User
+from typing import Union
 
 booking_bp = Blueprint('booking', __name__, url_prefix='/booking')
 
 @booking_bp.route('/book', methods=['GET', 'POST'])
-def book():
+def book() -> Union[str]:
     """ A route that handles a booking. """
 
     form = BookingForm()

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block head %}{% endblock %}
+{% block content %}
+
+<div class="content-section"></div>
+    {% if current_user.is_authenticated %}
+        <div class="media">
+            <div>
+                <!--img id="profile_photo" src="{{ image_file }}"-->
+                <h2 class="account-heading">{{ current_user.username }}</h2>
+                <p class="">{{ current_user.email }}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="container">
+            <h2>Account Info</h2>
+            <form method="POST" action="{{ url_for('user.dashboard') }}" autocomplete="off">
+                {{ form.hidden_tag() }}
+                <label for="username">Username:</label>
+                {{ form.username(size=32, autocomplete="off") }}
+                <label for="email">Email:</label>
+                {{ form.email(size=32, autocomplete="off") }}
+                <label for="phone">Phone:</label>
+                {{ form.phone(size=32, autocomplete="off") }}
+                <label for="favorite_color">Email:</label>
+                {{ form.favorite_color(size=32, autocomplete="off") }}
+                <label for="about_author">Email:</label>
+                {{ form.about_author(size=32, autocomplete="off") }}
+                <label for="profile_picture">Profile Picture:</label>
+                {{ form.profile_picture }}
+                {{ form.submit() }}
+            </form>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

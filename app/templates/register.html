@@ -5,6 +5,8 @@
     <h2>Join Today</h2>
     <form method="POST" action="{{ url_for('auth.register')}}" autocomplete="off">
         {{ form.hidden_tag() }}
+        <label for="name">Name:</label>
+        {{ form.name(size=32, autocomplete="off") }}
         <label for="username">Username:</label>
         {{ form.username(size=32, autocomplete="off") }}
         <label for="email">Email:</label>
