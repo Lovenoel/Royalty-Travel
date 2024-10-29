@@ -26,6 +26,7 @@ from routes.booking import booking_bp as booking_bp
 from routes.payment import payment_bp as payment_bp
 from routes.user import user_bp as user_bp
 from routes.passenger import passenger_bp as passenger_bp
+from routes.posts import posts_bp as posts_bp
 
 # Register the blueprints
 app.register_blueprint(auth_bp, url_prefix='/auth')
@@ -33,6 +34,8 @@ app.register_blueprint(booking_bp, url_prefix='/booking')
 app.register_blueprint(payment_bp, url_prefix='/payment')
 app.register_blueprint(user_bp, url_prefix='/user')
 app.register_blueprint(passenger_bp, url_prefix='/passenger')
+app.register_blueprint(posts_bp, url_prefix='/post')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def landing():

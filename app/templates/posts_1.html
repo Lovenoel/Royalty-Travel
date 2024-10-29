@@ -1,0 +1,39 @@
+<!-- {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/posts.css') }}">
+{% endblock %}
+{% block content %}
+    <h1>Manage Posts</h1>
+    
+    <!-- Display posts with update and delete buttons -->
+    {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <!-- Update Post Form -->
+            <form action="{{ url_for('posts.update_post', post_id=post.id) }}" method="POST" style="display: inline;">
+                {{ form.hidden_tag() }}
+                <input type="text" name="title" value="{{ post.title }}" required>
+                <input type="text" name="content" value="{{ post.content }}" required>
+                <button type="submit">Update</button>
+            </form>
+            <!-- Delete Post Form -->
+            <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST" style="display: inline;">
+                {{ form.hidden_tag() }}
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    {% endfor %}
+    
+    <!-- Form for creating a new post -->
+    <h3>Create a New Post</h3>
+    <form action="{{ url_for('posts.create_post') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <input type="text" name="title" placeholder="Post Title" required>
+        <textarea name="content" placeholder="Content" required></textarea>
+        <button type="submit">Create Post</button>
+    </form>
+
+    <script src="{{ url_for('static', filename='js/posts.js') }}"></script>
+
+<!-- {% endblock %} -->

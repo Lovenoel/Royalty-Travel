@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block head %}
+
+<title>Create/Update Post</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+{% endblock %}
+{% block content %}
+    <h1>{{ 'Update Post' if form.title.data else 'Create a New Post' }}</h1>
+    <form method="POST" action="{{ url_for('posts.create_post') if 'create' in request.path else url_for('posts.update_post', post_id=request.view_args['post_id']) }}">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.title.label }}<br>
+            {{ form.title(size=40) }}
+            {% if form.title.errors %}
+                <div class="error">{{ form.title.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div>
+            {{ form.content.label }}<br>
+            {{ form.content(rows=5, cols=40) }}
+            {% if form.content.errors %}
+                <div class="error">{{ form.content.errors[0] }}</div>
+            {% endif %}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+    <a href="{{ url_for('posts.view_posts') }}">Back to posts</a>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block head %}
+
+<title>Posts</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+{% endblock %}
+{% block content %}
+    <h1>All Posts</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.content }}</p>
+                <form method="POST" action="{{ url_for('posts.delete_post', post_id=post.id) }}">
+                    {{ form.hidden_tag()}}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+                <a href="{{ url_for('posts.update_post', post_id=post.id) }}">Edit</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('posts.create_post') }}">Create New Post</a>
+{% endblock %}

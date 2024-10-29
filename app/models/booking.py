@@ -7,7 +7,7 @@ class BaseBooking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     departure_place = db.Column(db.String(25), nullable=False)
     destination = db.Column(db.String(50), nullable=False)
-    departure_date_time = db.Column(db.DateTime, default=func.now())
+    date_time = db.Column(db.DateTime, default=func.now())
 
     def to_dict(self):
         """Converts the object to a dictionary representation"""
@@ -15,7 +15,7 @@ class BaseBooking(db.Model):
             'id': self.id,
             'departure_place': self.departure_place,
             'destination': self.destination,
-            'departure_date_time': self.departure_date_time
+            'date_time': self.date_time
         }
 
     def __repr__(self):

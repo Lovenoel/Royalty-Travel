@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, Response
 from models import db
 from models.booking import UserBooking, PassengerBooking
 from forms.bookingForm import BookingForm
@@ -20,19 +20,30 @@ def book() -> Union[str]:
                 username = form.username.data,
                 user_id = current_user.id,
                 departure_place = form.departure_place.data,
-                destination = form.departure.data,
+                destination = form.destination.data,
                 date_time = form.date_time.data,
                 is_guest = False
             )
 
             # Handles the passenger(Not registered user)
         else:
+            # For guests (not authenticated)
+            passenger = Passenger(
+                username=form.username.data,
+                
+            )
+            db.session.add(passenger)
+            db.session.flush()  # Ensure passenger ID is generated before booking
+
+
+
+
             booking = PassengerBooking(
                 username = form.username.data,
                 passenger_id = Passenger.id,
                 departure_place = form.departure_place.data,
                 destination = form.destination.data,
-                departure_date_time = form.departure_date_time.data,
+                date_time = form.date_time.data,
                 is_guest = True
             )
 
