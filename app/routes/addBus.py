@@ -43,7 +43,7 @@ def add_bus() -> Union[str]:
         db.session.commit()
         flash('Bus added successfully.', 'success')
         return redirect(url_for('bus.view_buses')) 
-    return render_template('add_Bus.html', form=form)
+    return render_template('add_bus.html', form=form)
 
 @bus_bp.route('/transport_status', methods=['GET', 'POST'])
 def transport_status():
