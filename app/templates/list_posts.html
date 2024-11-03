@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Posts</h2>
+
+    <div class="post-list">
+        {% for post in posts %}
+            <div class="post">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content | truncate(150) }}</p>
+                <small>By {{ post.author.username }} | 
+                    {% if post.is_public %}Public{% else %}Private{% endif %}
+                </small>
+
+                <!-- Show "View" button for all posts (public or private) that meet filtering conditions -->
+                <a href="{{ url_for('posts.view_post', post_id=post.id) }}">View Posts</a>
+
+                <!-- Show edit/delete options only for posts authored by the current user -->
+                {% if post.author_id == current_user.id %}
+                    <a href="{{ url_for('posts.update_post', post_id=post.id) }}">Edit Post</a>
+                    <a href="{{ url_for('posts.delete_post', post_id=post.id) }}" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+                {% endif %}
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+
+    <!-- Button to create a new post -->
+    <a href="{{ url_for('posts.create_post') }}" class="btn btn-primary">Create New Post</a>
+
+{% endblock %}

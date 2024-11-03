@@ -1,0 +1,37 @@
+<!-- templates/transport_status.html -->
+{% extends "base.html" %}
+
+{% block head %}
+<title>Transport Status</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Check Transport Status</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.location.label }} {{ form.location(size=20) }}
+    </div>
+    <div>
+        {{ form.destination.label }} {{ form.destination(size=20) }}
+    </div>
+    <div>
+        {{ form.transport_mode.label }} {{ form.transport_mode() }}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+
+{% if results %}
+    <h2>Available Transport Options</h2>
+    <ul>
+        {% for result in results %}
+            <li>
+                <strong>{{ result.name }}:</strong> Status: {{ result.status }}, Availability: {{ result.availability }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

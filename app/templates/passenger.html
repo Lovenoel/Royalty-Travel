@@ -1,4 +1,34 @@
-{% block head %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+{% endblock %}
 {% block content %}
-I am a guest passenger.
+
+<div class="content">
+    <h1>Passengers</h1>
+    <ul>
+        {% for passenger in passengers %}
+            <li>{{ passenger.username }} ({{ passenger.email }})</li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="showAddPassengerForm()">Add Passenger</button>
+
+    <div id="addPassengerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddPassengerForm()">&times;</span>
+            <form method="POST" action="{{ url_for('passengers.handle_passengers') }}">
+                {{ form.hidden_tag() }}
+                <label for="username">Username:</label>
+                {{ form.username(class="form-control", id="username") }}<br>
+                <label for="email">Email:</label>
+                {{ form.email(class="form-control", id="email") }}<br>
+                <label for="phone">Phone:</label>
+                {{ form.phone(class="form-control", id="phone") }}<br>
+                <button type="submit">Add Passenger</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/showAddPassengerForm.js') }}"></script>
+
 {% endblock %}

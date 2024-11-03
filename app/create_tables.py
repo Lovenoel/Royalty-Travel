@@ -83,19 +83,19 @@ def create_database_tables():
 #         upgrade()  # Apply any pending migrations
 #         print("Database migrations applied.")
 
-def seed_database():
-    """Seed the database with initial data."""
-    with app.app_context():
-        # Example: Adding a user
-        if not User.query.filter_by(username='admin').first():  # Check if user already exists
-            new_user = User(name='admin_1', username='admin', email='admin@example.com', phone='0789657895', password='password')  # Adjust as necessary
-            db.session.add(new_user)
-            db.session.commit()
-            print("Database seeded with initial data.")
-        else:
-            print("Admin user already exists.")
+# def seed_database():
+#     """Seed the database with initial data."""
+#     with app.app_context():
+#         # Example: Adding a user
+#         if not User.query.filter_by(username='admin').first():  # Check if user already exists
+#             new_user = User(name='admin_1', username='admin', email='admin@example.com', phone='0789657895', password='password')  # Adjust as necessary
+#             db.session.add(new_user)
+#             db.session.commit()
+#             print("Database seeded with initial data.")
+#         else:
+#             print("Admin user already exists.")
 
 if __name__ == "__main__":
     create_database_tables()  # Create tables
     # migrate_database()         # Run migrations
-    seed_database()            # Seed database
+    #seed_database()            # Seed database

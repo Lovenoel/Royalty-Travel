@@ -19,7 +19,7 @@
   <body>
     <div class="wrapper">
       <div class="header">
-        <h1 class="logo">Royalty Rravel</h1>
+        <h1 class="logo">Royalty Travel</h1>
       </div>
       <nav>
         <ul>
@@ -29,7 +29,15 @@
           {% if current_user.is_authenticated %}
             <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
             <li><a href="{{ url_for('user.dashboard') }}">Dashboard</a><li>
-            <li><a href="{{url_for('posts.view_posts')}}">Manage Posts</a></li>
+            <li><a href="{{url_for('posts.create_post')}}">Create Posts</a></li>
+
+            <!-- Manage posts section -->
+            {% if posts %}
+              {% for post in posts %}
+              <a href="{{ url_for('posts.view_posts', post_id=post.id) }}">{{ post.title }}</a>
+              {% endfor %}
+            {% endif %}
+            <li><a href="{{ url_for('bus.add_bus') }}">Add Bus</a></li>
           {% else %}
             <li><a href="{{ url_for('auth.register') }}">Sign up</a></li>
             <li><a href="{{ url_for('auth.login') }}">Login</a></li>
@@ -38,11 +46,11 @@
       </nav>
       <div>
         <!-- Flash messages display section -->
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
         <div>
           {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">{{ messages }}</div>
+          <div class="alert alert-{{ category }}">{{ message }}</div>
           {% endfor %}
         </div>
         {% endif %} {% endwith %}
